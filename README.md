@@ -129,15 +129,16 @@ $ ./sometools.sh list
 [31] Utilities/cryptz
 [32] Utilities/decodify
 [33] Utilities/evil-winrm
-[34] Utilities/nishang
-[35] Utilities/nmapAutomator
-[36] Utilities/revshellgen
-[37] Web/dirsearch
-[38] Web/kadimus
-[39] Web/windows-php-reverse-shell
-[40] Web/wwwolf-php-webshell
-[41] Wordpress/malicious-wordpress-plugin
-[42] Wordpress/wordpress-exploit-framework
+[34] Utilities/impacket
+[35] Utilities/nishang
+[36] Utilities/nmapAutomator
+[37] Utilities/revshellgen
+[38] Web/dirsearch
+[39] Web/kadimus
+[40] Web/windows-php-reverse-shell
+[41] Web/wwwolf-php-webshell
+[42] Wordpress/malicious-wordpress-plugin
+[43] Wordpress/wordpress-exploit-framework
 ```
 
 ### Detailed
@@ -177,6 +178,7 @@ $ ./sometools.sh list
 | Utilities     | cryptz                       | <https://github.com/iinc0gnit0/cryptz>                                      |
 | Utilities     | decodify                     | <https://github.com/s0md3v/Decodify>                                        |
 | Utilities     | evil-winrm                   | <https://github.com/Hackplayers/evil-winrm>                                 |
+| Utilities     | impacket                     | <https://github.com/SecureAuthCorp/impacket>                                 |
 | Utilities     | nishang                      | <https://github.com/samratashok/nishang>                                    |
 | Utilities     | nmapAutomator                | <https://github.com/21y4d/nmapAutomator>                                    |
 | Utilities     | revshellgen                  | <https://github.com/t0thkr1s/revshellgen>                                   |
