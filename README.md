@@ -18,6 +18,10 @@ $ ./sometools.sh list
 # For more info see Actions Detailed section.
 ```
 
+### Familiar with Vagrant ?
+
+See how to install Some-Tools with a brand new Kali 2020.x VM with only **5 commands** in the [Vagrantfile section](#Vagrantfile).
+
 ## Actions Summary
 
 - `setup` - Set up the environment (Create bin dir and set bin dir to your $PATH)
@@ -339,7 +343,11 @@ Note:
 
 ## Vagrantfile
 
-I'm using VMware desktop, so this Vagrantfile will be configure that way. You can modify vagrant box information to fit your need.
+Install Some-Tools within a brand new Kali 2020.x VM using [Vagrant](https://www.vagrantup.com). This repo include a Vagrantfile of Kali-Linux 2020.x release, but you can see the original vagrant box here <https://app.vagrantup.com/nicmilot/boxes/kali-full-2020>. Providers for this box are: VMWare Fusion and Virtualbox.
+
+I'm using VMware Fusion, so this Vagrantfile will be configure that way. You can modify vagrant box information to fit your need. If you are using Virtualbox, just swith the comments in the Vagrantfile.
+
+How to use it ? (Complete install with brand new Kali VM in 5 commands):
 
 ```bash
 # Download Vagrantfile from this repo
@@ -352,6 +360,10 @@ $ vagrant ssh
 $ cd Desktop/Some-Tools
 # setup some-tools
 $ ./sometools.sh setup
+# Verify the installation by:
+# 1. open new terminal tab or window
+# 2. cd ~/Desktop/Some-Tools
+# 3. ./sometools.sh list
 ```
 
 ## Others
