@@ -379,7 +379,7 @@ $ ./sometools.sh setup
 
 ## License
 
-The individual tools are all licensed under their own licenses.
+The individual tools are all licensed under their own licenses. As for Some-Tools, it is licensed under GNU General Public License v3.0.
 
 ⭐ If you find it useful, star it at the top of this page ⭐ Thank You 🔥😎
 
