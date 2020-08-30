@@ -129,20 +129,21 @@ $ ./sometools.sh list
 [27] PrivEsc-Win/Windows-Privilege-Escalation
 [28] PrivEsc-Win/mimikatz
 [29] PrivEsc-Win/windows-privesc-check
-[30] Utilities/Windows-Tools
-[31] Utilities/cryptz
-[32] Utilities/decodify
-[33] Utilities/evil-winrm
-[34] Utilities/impacket
-[35] Utilities/nishang
-[36] Utilities/nmapAutomator
-[37] Utilities/revshellgen
-[38] Web/dirsearch
-[39] Web/kadimus
-[40] Web/windows-php-reverse-shell
-[41] Web/wwwolf-php-webshell
-[42] Wordpress/malicious-wordpress-plugin
-[43] Wordpress/wordpress-exploit-framework
+[30] Utilities/SirepRAT
+[31] Utilities/Windows-Tools
+[32] Utilities/cryptz
+[33] Utilities/decodify
+[34] Utilities/evil-winrm
+[35] Utilities/impacket
+[36] Utilities/nishang
+[37] Utilities/nmapAutomator
+[38] Utilities/revshellgen
+[39] Web/dirsearch
+[40] Web/kadimus
+[41] Web/windows-php-reverse-shell
+[42] Web/wwwolf-php-webshell
+[43] Wordpress/malicious-wordpress-plugin
+[44] Wordpress/wordpress-exploit-framework
 ```
 
 ### Detailed
@@ -178,11 +179,12 @@ $ ./sometools.sh list
 | PrivEsc-Win   | Windows-Exploit-Suggester    | <https://github.com/AonCyberLabs/Windows-Exploit-Suggester>                 |
 | PrivEsc-Win   | mimikatz                     | <https://github.com/gentilkiwi/mimikatz>                                    |
 | PrivEsc-Win   | windows-privesc-check        | <https://github.com/pentestmonkey/windows-privesc-check>                    |
+| Utilities     | SirepRAT                     | <https://github.com/SafeBreach-Labs/SirepRAT.git>                           |
 | Utilities     | Windows-Tools                | <https://github.com/som3canadian/Windows-Tools.git>                         |
 | Utilities     | cryptz                       | <https://github.com/iinc0gnit0/cryptz>                                      |
 | Utilities     | decodify                     | <https://github.com/s0md3v/Decodify>                                        |
 | Utilities     | evil-winrm                   | <https://github.com/Hackplayers/evil-winrm>                                 |
-| Utilities     | impacket                     | <https://github.com/SecureAuthCorp/impacket>                                 |
+| Utilities     | impacket                     | <https://github.com/SecureAuthCorp/impacket>                                |
 | Utilities     | nishang                      | <https://github.com/samratashok/nishang>                                    |
 | Utilities     | nmapAutomator                | <https://github.com/21y4d/nmapAutomator>                                    |
 | Utilities     | revshellgen                  | <https://github.com/t0thkr1s/revshellgen>                                   |
