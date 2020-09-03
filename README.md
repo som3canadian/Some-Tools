@@ -133,19 +133,20 @@ $ ./sometools.sh list
 [29] PrivEsc-Win/windows-privesc-check
 [30] Utilities/SirepRAT
 [31] Utilities/Windows-Tools
-[32] Utilities/cryptz
-[33] Utilities/decodify
-[34] Utilities/evil-winrm
-[35] Utilities/impacket
-[36] Utilities/nishang
-[37] Utilities/nmapAutomator
-[38] Utilities/revshellgen
-[39] Web/dirsearch
-[40] Web/kadimus
-[41] Web/windows-php-reverse-shell
-[42] Web/wwwolf-php-webshell
-[43] Wordpress/malicious-wordpress-plugin
-[44] Wordpress/wordpress-exploit-framework
+[32] Utilities/chisel
+[33] Utilities/cryptz
+[34] Utilities/decodify
+[35] Utilities/evil-winrm
+[36] Utilities/impacket
+[37] Utilities/nishang
+[38] Utilities/nmapAutomator
+[39] Utilities/revshellgen
+[40] Web/dirsearch
+[41] Web/kadimus
+[42] Web/windows-php-reverse-shell
+[43] Web/wwwolf-php-webshell
+[44] Wordpress/malicious-wordpress-plugin
+[45] Wordpress/wordpress-exploit-framework
 ```
 
 ### Detailed
@@ -183,6 +184,7 @@ $ ./sometools.sh list
 | PrivEsc-Win   | windows-privesc-check        | <https://github.com/pentestmonkey/windows-privesc-check>                    |
 | Utilities     | SirepRAT                     | <https://github.com/SafeBreach-Labs/SirepRAT.git>                           |
 | Utilities     | Windows-Tools                | <https://github.com/som3canadian/Windows-Tools.git>                         |
+| Utilities     | chisel                       | <https://github.com/jpillora/chisel>                                        |
 | Utilities     | cryptz                       | <https://github.com/iinc0gnit0/cryptz>                                      |
 | Utilities     | decodify                     | <https://github.com/s0md3v/Decodify>                                        |
 | Utilities     | evil-winrm                   | <https://github.com/Hackplayers/evil-winrm>                                 |

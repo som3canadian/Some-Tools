@@ -96,7 +96,6 @@ function toolVAR() {
 toolVAR
 ########## End of Function to associate ID with $TOOL ($2 argument) ##########
 
-
 ########## Functions include in setup action  ##########
 # function to help you install require packages at the begining of the setup process.
 # not being used for the moment
@@ -158,6 +157,30 @@ function setUp() {
 ########## End of Functions include in setup action  ##########
 
 ########## General Functions  ##########
+function specialUpdate() {
+    cd $SOME_ROOT/$TOOLPATH
+    if [ -x "./update-tool.sh" ]; then
+        log "[+] [$TOOL] We found an update-tool.sh file within this tool."
+        echo "> Do you want to update with update-tool.sh ?"
+        echo "[*] Choose 1 or 2"
+        select yn in "Yes" "No"; do
+            case $yn in
+            Yes)
+                echo "Updating with update-tool.sh"
+                ./update-tool.sh
+                break
+                ;;
+            No)
+                echo "No stress, not updating !"
+                break
+                ;;
+            esac
+        done
+    else
+        log "[-] [$TOOL] No update-tool.sh file or nothing to update with it. In most case, this is a normal output."
+    fi
+}
+
 function checkUpdate() {
     cd $TOOLPATH
     echo ""
@@ -165,36 +188,21 @@ function checkUpdate() {
         log "[+] $TOOL is installed, continuing..."
         if [ -d "./$TOOL/.git" ]; then
             cd $TOOL
-            log "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
             if $SOME_ROOT/check-git.sh | grep "Your repo is Behind. You Need to Pull." >/dev/null; then
                 log "[+] [$TOOL] Checking for Update with checkgit."
                 $CHECKGITACTION
                 cd ..
-                if [ -x "./update-tool.sh" ]; then
-                    log "[+] [$TOOL] We found an update-tool.sh file within this tool."
-                    echo "> Do you want to update with update-tool.sh ?"
-                    echo "[*] Choose 1 or 2"
-                    select yn in "Yes" "No"; do
-                        case $yn in
-                        Yes)
-                            echo "Updating with update-tool.sh"
-                            ./update-tool.sh
-                            break
-                            ;;
-                        No)
-                            echo "No stress, not updating !"
-                            break
-                            ;;
-                        esac
-                    done
-                else
-                    log "[-] [$TOOL] No update-tool.sh file or nothing to update with it. In most case, this is a normal output."
-                fi
+                log "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
+                specialUpdate
             else
-                log "[+] [$TOOL] You are not behind. Quitting !"
+                log "[+] [$TOOL] You are not behind!"
+                log "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
+                specialUpdate
             fi
         else
             log "[-] [$TOOL] Not a git repo !"
+            log "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
+            specialUpdate
         fi
     else
         echo ""
