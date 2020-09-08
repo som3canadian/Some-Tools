@@ -158,7 +158,7 @@ function setUp() {
 
 ########## General Functions  ##########
 function specialUpdate() {
-    cd $SOME_ROOT/$TOOLPATH
+    #cd $SOME_ROOT/$TOOLPATH
     if [ -x "./update-tool.sh" ]; then
         log "[+] [$TOOL] We found an update-tool.sh file within this tool."
         echo "> Do you want to update with update-tool.sh ?"
@@ -191,17 +191,19 @@ function checkUpdate() {
             if $SOME_ROOT/check-git.sh | grep "Your repo is Behind. You Need to Pull." >/dev/null; then
                 log "[+] [$TOOL] Checking for Update with checkgit."
                 $CHECKGITACTION
-                cd ..
                 log "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
+                cd $SOME_ROOT/$TOOLPATH
                 specialUpdate
             else
                 log "[+] [$TOOL] You are not behind!"
                 log "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
+                cd $SOME_ROOT/$TOOLPATH
                 specialUpdate
             fi
         else
             log "[-] [$TOOL] Not a git repo !"
             log "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
+            cd $SOME_ROOT/$TOOLPATH
             specialUpdate
         fi
     else
@@ -210,7 +212,7 @@ function checkUpdate() {
     fi
 }
 
-# ask to open install-tool.sh and uninstall-tool.sh with code when add-tool.
+# ask to open install-tool.sh and uninstall-tool.sh with vscode(code command) when add-tool.
 # very useful to me, you can change it to another code editor if you want.
 function askCode() {
     whichCode=$(which code)
@@ -458,38 +460,23 @@ function checkUpdateAll() {
                 if "$CHECKGIT" | grep "Your repo is Behind. You Need to Pull" >/dev/null; then
                     log "[+] [$t] Checking for Update with checkgit."
                     $CHECKGITACTION
-                    cd $DIR
                     log "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
-                    if [ -x "$t/update-tool.sh" ]; then
-                        echo ""
-                        log "[+] [$t] We found an update-tool.sh file within this tool."
-                        echo "> Do you want to update with update-tool.sh ?"
-                        echo "[*] Choose 1 or 2"
-                        select yn in "Yes" "No"; do
-                            case $yn in
-                            Yes)
-                                echo "Updating with update-tool.sh"
-                                cd $t
-                                ./update-tool.sh
-                                cd $DIR
-                                break
-                                ;;
-                            No)
-                                echo "No stress, not updating !"
-                                break
-                                ;;
-                            esac
-                        done
-                    else
-                        log "[-] [$t] No update-tool.sh file or nothing to update with it. In most case, this is a normal output."
-                        cd $DIR
-                    fi
+                    cd ..
+                    specialUpdate
+                    cd $DIR
                 else
                     log "[+] [$t] You are not behind. $temptoolname is up to date !"
+                    log "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
+                    cd ..
+                    specialUpdate
                     cd $DIR
                 fi
             else
                 log "[-] [$t] Not a git repo !"
+                log "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
+                cd $t/$temptoolname
+                cd ..
+                specialUpdate
                 cd $DIR
             fi
         else
