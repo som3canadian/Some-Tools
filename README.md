@@ -35,7 +35,7 @@ See how to install Some-Tools with a brand new Kali 2020.x VM with only **5 comm
 - `install` - Install a tool
 - `install-cat` - Install all tools of a Category
 - `install-all` - Install all tools
-- `check-update` - Check Update for an installed tools and Update it if you want (Only for tools from a git repo)
+- `check-update` - Check Update for an installed tools and Update it if you want.
 - `check-update-all` - Check Update for all installed tools
 - `self-update` - Check Update for Some-Tools and Update if you want
 - `add-tool` - Create template for a new tool (./sometools.sh add-tool newtoolname category)
@@ -88,9 +88,11 @@ $ ./sometools.sh self-update
 $ ./sometools.sh complete-uninstall
 ```
 
+![Some-Tools Help](images/sometools-help.jpg)
+
 ## The Bin directory
 
-- The bin directory will be create when doing the setup action. This will be the dir path that we will add to our shell $PATH (../../../Some-Tools/bin). In the bin dir we will put copy(symlink) of tool(s) that we want executable everywhere on our machine.For example a tool like `unicorn.py`, you may want to execute `unicorn` from everywhere you want.
+- The bin directory will be create when doing the setup action. This will be the dir path that we will add to our shell $PATH (`your/install/dir/Some-Tools/bin`). In the bin dir we will put copy(symlink) of tool(s) that we want executable everywhere on our machine.For example a tool like `unicorn.py`, you may want to execute `unicorn` from everywhere you want.
 
 - The setup action will aslo create `bin/PrivEsc-Lin` and `bin/PrivEsc-Win` in the process. In this directories we will keep our privilege escalation scripts. So, when you want to use your tools, you can fire a python http server and quickly upload the scripts you desire. The scripts in those folders **will be update at the same time you update the tool(s)** with check-update action.
 
@@ -140,13 +142,14 @@ $ ./sometools.sh list
 [36] Utilities/impacket
 [37] Utilities/nishang
 [38] Utilities/nmapAutomator
-[39] Utilities/revshellgen
-[40] Web/dirsearch
-[41] Web/kadimus
-[42] Web/windows-php-reverse-shell
-[43] Web/wwwolf-php-webshell
-[44] Wordpress/malicious-wordpress-plugin
-[45] Wordpress/wordpress-exploit-framework
+[39] Utilities/pypykatz
+[40] Utilities/revshellgen
+[41] Web/dirsearch
+[42] Web/kadimus
+[43] Web/windows-php-reverse-shell
+[44] Web/wwwolf-php-webshell
+[45] Wordpress/malicious-wordpress-plugin
+[46] Wordpress/wordpress-exploit-framework
 ```
 
 ### Detailed
@@ -191,6 +194,7 @@ $ ./sometools.sh list
 | Utilities     | impacket                     | <https://github.com/SecureAuthCorp/impacket>                                |
 | Utilities     | nishang                      | <https://github.com/samratashok/nishang>                                    |
 | Utilities     | nmapAutomator                | <https://github.com/21y4d/nmapAutomator>                                    |
+| Utilities     | pypykatz                     | <https://github.com/skelsec/pypykatz>                                       |
 | Utilities     | revshellgen                  | <https://github.com/t0thkr1s/revshellgen>                                   |
 | Web           | dirsearch                    | <https://github.com/maurosoria/dirsearch>                                   |
 | Web           | Kadimus                      | <https://github.com/P0cL4bs/kadimus>                                        |
@@ -247,7 +251,7 @@ Note:
 
 - **check-update** and **check-update-all**:
   - Check update for an installed tool or all installed tools
-  - check-update won't update if your tool is not a git repo. So you must manually update tool(s) that didn't contain `.git` directory.
+  - check-update works for tools coming from a git repo. If you add a new tools that is not a git repo(`.git` dir), you can make an `update-tool.sh` file with your specials instructions (file must be name `update-tool.sh`).
   - If you check-update only one tool, instead of using tool name, you can use is ID number showed when you do `./sometools.sh list`.
 
   ```bash
@@ -339,9 +343,9 @@ Note:
   ```
 
 - **complete-uninstall**:
-  - Delete all installed tools, remove bin directory and delete our modification in .zshrc or .bashrc
-  - We will delete only some-tools section in your .zshrc or .bashrc file. So if you made some modifications along the way, they will be kept.
-  - Af the complete uninstall, you shoudl have 3 .zshrc or .bashrc file. One finishing with .backup that we created at the initial setup and the second one, .backup2, before deleting sometools section in the complete-uninstall process.
+  - Delete all installed tools, remove bin directory and delete our modification in `.zshrc` or `.bashrc`.
+  - We will delete only some-tools section in your `.zshrc` or `.bashrc` file. So if you made some modifications along the way, they will be kept.
+  - Af the complete uninstall, you shoudl have 3 `.zshrc` or `.bashrc` file. One finishing with `.backup` that we created at the initial setup and the second one, `.backup2`, before deleting sometools section in the complete-uninstall process.
 
   ```bash
   $ ./sometools.sh complete-uninstall

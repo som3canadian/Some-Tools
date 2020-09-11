@@ -1,10 +1,11 @@
 #!/bin/bash
 
 # By SomeCanadian
-
-# idea / bugs:
+####
+# idea / bugs -> somecanadian0@gmail.com
 #####
-# New Idea/bug here
+# New Idea/bug here:
+
 #####
 
 function usage() {
@@ -466,9 +467,6 @@ function checkUpdateAll() {
                     cd $DIR
                 else
                     log "[+] [$t] You are not behind. $temptoolname is up to date !"
-                    log "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
-                    cd ..
-                    specialUpdate
                     cd $DIR
                 fi
             else
