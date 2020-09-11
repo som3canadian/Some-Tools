@@ -1,7 +1,5 @@
 # Some-Tools
 
-<a href="https://www.buymeacoffee.com/somecanadian" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/arial-red.png" alt="Buy Me A Coffee" height="51" width="217"></a>
-
 ## Why
 
 I was looking for a way to manage and **keep up to date** some tools that are not include in Kali-Linux. For exemple, I was looking for an easy way to manage privilege escalation scripts. One day I saw sec-tools from eugenekolo (which you can see at the bottom of the page) and it gave me the motivation to start working on mine right away.
@@ -390,6 +388,8 @@ $ ./sometools.sh setup
 The individual tools are all licensed under their own licenses. As for Some-Tools, it is licensed under GNU General Public License v3.0.
 
 ⭐ If you find it useful, star it at the top of this page ⭐ or you can buy me a ☕. Thank You 🔥😎
+
+<a href="https://www.buymeacoffee.com/somecanadian" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/arial-red.png" alt="Buy Me A Coffee" height="51" width="217"></a>
 
 ## Acknowledgements
 
