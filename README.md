@@ -30,6 +30,7 @@ See how to install Some-Tools with a brand new Kali 2020.x VM with only **5 comm
 - `list` - List all tools (Installed tools will appear in a different color)
 - `list-cat` - List all tools of a Category (Installed tools will appear in a different color)
 - `list-installed` - List all installed tools
+- `list-bin` - List installed tools accessible from anywhere on your machine
 - `install` - Install a tool
 - `install-cat` - Install all tools of a Category
 - `install-all` - Install all tools
@@ -54,6 +55,8 @@ $ ./sometools.sh list
 $ ./sometools.sh list-cat
 # List install tool(s)
 $ ./sometools.sh list-installed
+# List installed tools accessible from anywhere on your machine
+$ ./sometool.sh list-bin
 # Install a tool
 $ ./sometools.sh install unicorn
 # Using ID instead of tool name
@@ -86,7 +89,7 @@ $ ./sometools.sh self-update
 $ ./sometools.sh complete-uninstall
 ```
 
-![Some-Tools Help](images/sometools-help.jpg)
+![Some-Tools Help](images/sometoolshelp.jpg)
 
 ## The Bin directory
 
@@ -343,7 +346,7 @@ Note:
 - **complete-uninstall**:
   - Delete all installed tools, remove bin directory and delete our modification in `.zshrc` or `.bashrc`.
   - We will delete only some-tools section in your `.zshrc` or `.bashrc` file. So if you made some modifications along the way, they will be kept.
-  - Af the complete uninstall, you shoudl have 3 `.zshrc` or `.bashrc` file. One finishing with `.backup` that we created at the initial setup and the second one, `.backup2`, before deleting sometools section in the complete-uninstall process.
+  - Af the complete uninstall, you should have 3 `.zshrc` or `.bashrc` file. One finishing with `.backup` that we created at the initial setup and the second one, `.backup2`, before deleting sometools section in the complete-uninstall process.
 
   ```bash
   $ ./sometools.sh complete-uninstall

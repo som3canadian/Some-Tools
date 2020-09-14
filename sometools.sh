@@ -5,7 +5,7 @@
 # idea / bugs -> somecanadian0@gmail.com
 #####
 # New Idea/bug here:
-
+#
 #####
 
 function usage() {
@@ -23,6 +23,7 @@ Actions:
       list                 List all tools (Installed tools will appear in a different color)
       list-cat             List all tools of a Category (Installed tools will appear in a different color)
       list-installed       List all installed tools
+      list-bin             List installed tools accessible from anywhere on your machine
       install              Install a tool
       install-cat          Install all tools of a Category
       install-all          Install all tools
@@ -57,7 +58,7 @@ ACTION=$1
 TOOL="$2"
 NEWTOOLDIR=$3
 
-if [ -z "$TOOL" -a "$ACTION" != "list" -a "$ACTION" != "list-installed" -a "$ACTION" != "setup" -a "$ACTION" != "self-update" -a "$ACTION" != "help" -a "$ACTION" != "check-update-all" -a "$ACTION" != "install-all" -a "$ACTION" != "complete-uninstall" ]; then
+if [ -z "$TOOL" -a "$ACTION" != "list" -a "$ACTION" != "list-installed" -a "$ACTION" != "list-bin" -a "$ACTION" != "setup" -a "$ACTION" != "self-update" -a "$ACTION" != "help" -a "$ACTION" != "check-update-all" -a "$ACTION" != "install-all" -a "$ACTION" != "complete-uninstall" ]; then
     usage
     exit 1
 fi
@@ -397,6 +398,37 @@ function listCat() {
         #COUNTER=$((COUNTER + 1))
     done
 }
+
+function listBIN() {
+    # numbers of words for some_root path (preparing path)
+    pathCount=$(echo $SOME_ROOT | grep -o "/" | wc -l)
+    pathStart=$(($pathCount + 2))
+    pathEnd=$(($pathStart + 1))
+    # show line that are symlink and strip path
+    ls -l bin | grep "^lrwxrwxrwx" | cut -d'/' -f$pathStart-$pathEnd >binlist.txt
+    # making sure that installed tools are actually installed
+    for t in */*; do
+        [ ! -e "$t/install-tool.sh" ] && continue
+        echo "$t" >>list.txt
+    done
+    # sorting
+    sort binlist.txt list.txt | uniq -d >binlist-clean.txt
+    # output installed tools present in bin dir
+    echo ""
+    echo "Installed tools accessible from anywhere on your machine"
+    echo ""
+    COUNTER=1
+    while read -r line; do
+        echo "[$COUNTER] $line"
+        COUNTER=$((COUNTER + 1))
+    done <binlist-clean.txt
+    echo ""
+    echo "See tools full path by doing: ls -l bin"
+    # cleaning
+    rm binlist-clean.txt
+    rm list.txt
+    rm binlist.txt
+}
 ########## End of List function  ##########
 
 ########## Functions with Actions Cat  ##########
@@ -568,6 +600,9 @@ list-installed)
     ;;
 list-cat)
     listCat
+    ;;
+list-bin)
+    listBIN
     ;;
 info)
     infoTool
