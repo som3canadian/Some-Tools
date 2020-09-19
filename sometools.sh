@@ -27,7 +27,7 @@ Actions:
       install              Install a tool
       install-cat          Install all tools of a Category
       install-all          Install all tools
-      check-update         Check Update for an installed tools and Update it if you want (Only for tools from a git repo)
+      check-update         Check Update for an installed tool and Update it if you want
       check-update-all     Check Update for all installed tools
       self-update          Check Update for Some-Tools and Update if you want
       add-tool             Create template for a new tool (./$(basename $0) add-tool newtoolname category)
@@ -100,7 +100,6 @@ toolVAR
 
 ########## Functions include in setup action  ##########
 # function to help you install require packages at the begining of the setup process.
-# not being used for the moment
 function requirePackages() {
     #sudo apt install git python-pip build-essential libtool
     sudo apt install python3-pip python3-scrapy
@@ -385,7 +384,6 @@ function listInstalled() {
 }
 
 function listCat() {
-    #COUNTER=1
     echo ""
     for t in $TOOL/*; do
         if [ -f "$t/.installed" ]; then
@@ -395,7 +393,6 @@ function listCat() {
         fi
         [ ! -e "$t/install-tool.sh" ] && continue
         $myColor "[+] $t"
-        #COUNTER=$((COUNTER + 1))
     done
 }
 
@@ -510,7 +507,6 @@ function checkUpdateAll() {
                 cd $DIR
             fi
         else
-            #log "[-] [$t] Tool not installed !"
             echo "[-] [$t] Tool not installed !" >/dev/null
         fi
     done

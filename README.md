@@ -1,5 +1,11 @@
 # Some-Tools
 
+Manage all your pentest tools in one place et keep them up to date with one command 😎
+
+<br>
+
+➡️ As seen on Kitploit: <https://www.kitploit.com/2020/09/some-tools-install-and-keep-up-to-date.html> ⭐
+
 ## Why
 
 I was looking for a way to manage and **keep up to date** some tools that are not include in Kali-Linux. For exemple, I was looking for an easy way to manage privilege escalation scripts. One day I saw sec-tools from eugenekolo (which you can see at the bottom of the page) and it gave me the motivation to start working on mine right away.
@@ -89,7 +95,7 @@ $ ./sometools.sh self-update
 $ ./sometools.sh complete-uninstall
 ```
 
-![Some-Tools Help](images/sometoolshelp.jpg)
+![Some-Tools Help](images/sometools-help.jpg)
 
 ## The Bin directory
 
@@ -396,4 +402,5 @@ The individual tools are all licensed under their own licenses. As for Some-Tool
 
 ## Acknowledgements
 
-Built from the idea of <https://github.com/eugenekolo/sec-tools> and <https://github.com/zardus/ctf-tools>.
+- Built from the idea of <https://github.com/eugenekolo/sec-tools> and <https://github.com/zardus/ctf-tools>.
+- Vagrant box by: [nicmilot](https://app.vagrantup.com/nicmilot/boxes/kali-full-2020). You can see his others vagrant boxes like: [pwk-kali-2018](https://app.vagrantup.com/nicmilot/boxes/pwk-kali-2018) for VMware Fusion and [Metapsloitable3](https://app.vagrantup.com/nicmilot/boxes/metasploitable3-win2008-vmware) for VMware Fusion too.
