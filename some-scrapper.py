@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3
 
-# By Jelecool and modified by SomeCanadian
+# By Jelecool and modified by som3canadian
 
 import scrapy
 

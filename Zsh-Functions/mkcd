@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# by som3canadian
+
+# mkdir and cd
+# usage: mkcd mynewfolder
+
+function mkcd() {
+  mkdir $1 && cd $1
+}

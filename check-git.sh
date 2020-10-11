@@ -1,6 +1,6 @@
 #!/bin/bash
 
-### By SomeCanadian
+### by som3canadian
 
 # This script on only check if the version our version of the tool is up to date or behind the master.
 # If behind, some-tools will use check-git-action script

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# by som3canadian
+
+# purpose: move a file/folder into your current directory like: mv ~/Downloads/mydownload.txt
+
+function mv() {
+  if [ $# -ne 1 ]; then
+    echo "$@"
+    /bin/mv "$@"
+  else
+    currentPath="$(pwd)"
+    newfilename="$1"
+    /bin/mv "$newfilename" "$currentPath"
+  fi
+}
+mv "$@"

@@ -1,6 +1,6 @@
 # Some-Tools
 
-Manage all your pentest tools in one place et keep them up to date with one command 😎
+Manage all your pentest tools in one place and keep them up to date with one command 😎
 
 <br>
 
@@ -8,9 +8,9 @@ Manage all your pentest tools in one place et keep them up to date with one comm
 
 ## Why
 
-I was looking for a way to manage and **keep up to date** some tools that are not include in Kali-Linux. For exemple, I was looking for an easy way to manage privilege escalation scripts. One day I saw sec-tools from eugenekolo (which you can see at the bottom of the page) and it gave me the motivation to start working on mine right away.
+I was looking for a way to manage and **keep up to date** some tools that are not included in Kali-Linux. For example, I was looking for an easy way to manage privilege escalation scripts. One day I saw sec-tools from eugenekolo (which you can see at the bottom of the page) and it gave me the motivation to start working on mine right away.
 
-But keep in mind that is different. I built this for people that are working with Kali. Should work on others distro but I didn't include tool like Burp Suite or SQLmap because it comes in Kali by default.
+But keep in mind that is different. I built this for people that are working with Kali. Should work on other distro but I didn't include tool like Burp Suite or SQLmap because it comes in Kali by default.
 
 ## Installation
 
@@ -48,7 +48,7 @@ See how to install Some-Tools with a brand new Kali 2020.x VM with only **5 comm
 - `uninstall-cat` - Uninstall all tools of a Category
 - `complete-uninstall` - Delete all installed tools, remove bin directory and delete our modification in .zshrc or .bashrc
 
-**note**: No need to precise the category name when using a tool. Just use tool name.
+**note**: No need to specify the category names when using a tool. Just use tool name.
 
 ## Basic usage
 
@@ -80,6 +80,7 @@ $ ./sometools.sh check-update PEAS
 # Using ID instead of tool name
 $ ./sometools.sh check-update 9
 # Check update for all installed tools
+# check-update all command is the main reason why I made this
 $ ./sometools.sh check-update all
 # Add a new tool
 $ ./sometools.sh add-tool newtoolname PrivEsc-Lin
@@ -99,9 +100,28 @@ $ ./sometools.sh complete-uninstall
 
 ## The Bin directory
 
-- The bin directory will be create when doing the setup action. This will be the dir path that we will add to our shell $PATH (`your/install/dir/Some-Tools/bin`). In the bin dir we will put copy(symlink) of tool(s) that we want executable everywhere on our machine.For example a tool like `unicorn.py`, you may want to execute `unicorn` from everywhere you want.
+- The bin directory will be created when doing the setup action. This will be the dir path that we will add to our shell $PATH (`your/install/dir/Some-Tools/bin`). In the bin dir we will put copy(symlink) of tool(s) that we want executable everywhere on our machine.For example a tool like `unicorn.py`, you may want to execute `unicorn` from everywhere you want.
 
-- The setup action will aslo create `bin/PrivEsc-Lin` and `bin/PrivEsc-Win` in the process. In this directories we will keep our privilege escalation scripts. So, when you want to use your tools, you can fire a python http server and quickly upload the scripts you desire. The scripts in those folders **will be update at the same time you update the tool(s)** with check-update action.
+- The setup action will aslo create `bin/PrivEsc-Lin` and `bin/PrivEsc-Win` in the process. In this directory we will keep our privilege escalation scripts. So, when you want to use your tools, you can fire a python http server and quickly upload the scripts you desire. The scripts in those folders **will be update at the same time you update the tool(s)** with check-update action.
+
+## Zsh Functions
+
+- Zsh functions does not contain any pentest tools, it contains little script that help my  workflow a lot and I thought it would be useful to others too.
+
+- Maybe it could be use with other shell but I use it with zsh.
+
+- This **won't** be set during the setup process. You have to set it manually. How ? By adding the snippet below to your `.zshrc` file.
+
+```bash
+# Custom functions dir
+# make sure to modify the path below to fit your need
+fpath=(~/path/of/sometools/Zsh-Functions $fpath);
+autoload -U $fpath[1]/*(.:t)
+```
+
+- mkcd: mkdir and cd
+- mv: move a file/folder into your current directory (with one argument)
+- op: open file or folder in file manager (`op .` to open current directory)
 
 ## Tools List
 
@@ -280,7 +300,7 @@ Note:
   ```
 
 - **uninstall**:
-  - Uninstall an installed tool. No function uninstall-all, I guess at this point you can delete the repo.
+  - Uninstall an installed tool.
   - Instead of using tool name, you can use is ID number showed when you do `./sometools.sh list`.
 
   ```bash
@@ -304,7 +324,7 @@ Note:
 
 - **install-tool and update-tool using scrapy**
   
-  Sometimes tool need to be download via the releases/latest page like pspy from DominicBreuker. So to be able to always update and download the latest version, the process needed a little twist with python and scrapy. If you add a new tool using this pattern, you can use the function bellow in your install-tool.sh and update-tool.sh files.
+  Sometimes tools need to be downloaded via the releases/latest page like pspy from DominicBreuker. So to be able to always update and download the latest version, the process needed a little twist with python and scrapy. If you add a new tool using this pattern, you can use the function bellow in your install-tool.sh and update-tool.sh files.
 
   ```bash
   # example with pspy
@@ -386,8 +406,8 @@ $ ./sometools.sh setup
 ## Others
 
 - When using the ID number instead of tool name, be sure to use the ID number from `./sometools.sh list` and not `./sometools.sh list-installed`
-- If you add a new tool that need specific update instructions, you can create the file `update-tool.sh` in the tool dir (like the install-tool.sh and uninstall-tool.sh file). When you will check-update, the some-tools.sh script will take it in consideration.
-- You **can't** use the same name for two tools. It will cause problems. When using add-tool action, we will check for that. A solution for that would be to precise category name when using an action but I **really don't want that**. Since using a different name is easy, I have no intention for the moment to develop a solution that will let us use the same name for multiple tools.
+- If you add a new tool that needs specific update instructions, you can create the file `update-tool.sh` in the tool dir (like the install-tool.sh and uninstall-tool.sh file). When you will check-update, the some-tools.sh script will take it in consideration.
+- You **can't** use the same name for two tools. It will cause problems. When using add-tool action, we will check for that. A solution for that would be to specify category name when using an action but I **really don't want that**. Since using a different name is easy, I have no intention for the moment to develop a solution that will let us use the same name for multiple tools.
 - Some of the tool you will install may ask you for `sudo` permissions !
 - The `check-git.sh` file include in the repo is for the check-update and check-update-all actions.
 - I'm building this on my free time, may have some bugs. If stars start to grow, I may put more time and effort.

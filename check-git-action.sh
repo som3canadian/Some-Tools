@@ -1,6 +1,6 @@
 #!/bin/bash
 
-### By SomeCanadian
+### by som3canadian
 
 # This tool is use when check-git detected a possible update.
 # This script is more extensive then what we need. Why ? I used a script I had already made and it could be useful for furtur some-tools function.

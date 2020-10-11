@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# By SomeCanadian
+### by som3canadian
 ####
 # idea / bugs -> somecanadian0@gmail.com
 #####

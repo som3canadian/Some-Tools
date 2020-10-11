@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# by som3canadian
+
+# open file or folder in file manager (kali and mac)(reveal in finder for mac)
+# you can add other platform if you want
+# to open current directory in filemanager -> op .
+
+function op() {
+  if [[ "$OSTYPE" == "linux-gnu"* ]];then
+    xdg-open $1
+  elif [[ "$OSTYPE" == "darwin"* ]]; then
+    open --reveal $1
+  else
+    echo "Unknown platform!"
+  fi
+}

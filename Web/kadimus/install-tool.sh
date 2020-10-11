@@ -1,5 +1,6 @@
 echo "This tool is installed" > .installed
 #---Install cmd start here---
+sudo apt install libcurl libopenssl libpcre libssh libssh-dev
 git clone https://github.com/P0cL4bs/kadimus.git kadimus
 cd kadimus
 make
