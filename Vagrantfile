@@ -6,11 +6,11 @@ SCRIPT
 
 Vagrant.configure("2") do |config|
   config.vm.box = "nicmilot/kali-full-2020"
-  config.vm.box_version = "1.2.0"
-  config.vm.provider "vmware_desktop"
+  config.vm.box_version = "1.3.0"
+  config.vm.provider "vmware_fusion"
 #  config.vm.provider "virtualbox"
   config.vm.hostname = "kali-full"
-  config.vm.provider "vmware_desktop" do |v|
+  config.vm.provider "vmware_fusion" do |v|
    v.gui = true
    v.linked_clone = false
    v.vmx["memsize"] = "4096"

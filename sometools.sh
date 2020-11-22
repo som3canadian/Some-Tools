@@ -11,7 +11,7 @@
 function usage() {
     cat <<END
 
-Usage: ./$(basename $0) action-name tool
+Usage: ./$(basename "$0") action-name tool
 
 Where:
       tool                The name of the tool (No need to precise the category name)
@@ -30,17 +30,17 @@ Actions:
       check-update         Check Update for an installed tool and Update it if you want
       check-update-all     Check Update for all installed tools
       self-update          Check Update for Some-Tools and Update if you want
-      add-tool             Create template for a new tool (./$(basename $0) add-tool newtoolname category)
+      add-tool             Create template for a new tool (./$(basename "$0") add-tool newtoolname category)
       uninstall            Uninstall a tool (Trying uninstall with the tool built-in uninstall.sh before Cleaning from our project)
       uninstall-cat        Uninstall all tools of a Category
       complete-uninstall   Delete all installed tools, remove bin directory and delete our modification in .zshrc or .bashrc
 
 
-Usage ex: ./$(basename $0) setup
-Usage ex: ./$(basename $0) list
-Usage ex: ./$(basename $0) install LinEnum
+Usage ex: ./$(basename "$0") setup
+Usage ex: ./$(basename "$0") list
+Usage ex: ./$(basename "$0") install LinEnum
 You can also take the ID number from ./sometools.sh list action:
-Usage ex: ./$(basename $0) install 6
+Usage ex: ./$(basename "$0") install 6
 
 For more info and examples see: http://github.com/som3canadian/Some-Tools or cat README.md
 END
@@ -50,6 +50,16 @@ function log() {
     echo -e "${PURPLE}${BOLD}$@${RESET}"
 }
 
+function logInfo() {
+    echo -e "${YELLOW}${BOLD}$@${RESET}"
+}
+
+function logGood() {
+    echo -e "${GREEN}${BOLD}$@${RESET}"
+}
+
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
 PURPLE='\033[0;35m'
 RESET='\033[0m'
 BOLD='\033[1m'
@@ -65,7 +75,7 @@ fi
 
 # https://medium.com/@Aenon/bash-location-of-current-script-76db7fd2e388
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd $DIR
+cd "$DIR"
 
 CHECKGIT="$SOME_ROOT/check-git.sh"
 CHECKGITACTION="$SOME_ROOT/check-git-action.sh"
@@ -92,7 +102,7 @@ function toolVAR() {
         TOOLPATH="$tempTOOLPATH"
         rm tools.txt
     else
-        TOOLPATH="$(dirname */$TOOL/install-tool.sh)"
+        TOOLPATH="$(dirname */"$TOOL"/install-tool.sh)"
     fi
 }
 toolVAR
@@ -138,21 +148,21 @@ function setUp() {
         No) exit 1 ;;
         esac
     done
-    pathOG=$(echo $PATH)
+    pathOG=$(echo "$PATH")
     SOME_ROOT=$DIR
     # backup .zshrc or .bashrc
-    cp $HOME_PATH/.$shellSelect $HOME_PATH/.$shellSelect.backup
-    echo "" >>$HOME_PATH/.$shellSelect
-    echo "#Some-tools-start configuration below" >>$HOME_PATH/.$shellSelect
-    echo "# Your PATH before any modifications: $pathOG" >>$HOME_PATH/.$shellSelect
-    echo "# If you want to reset your PATH just remove all lines we created and do: export PATH=$pathOG follow by: source ~/.$shellSelect" >>$HOME_PATH/.$shellSelect
-    echo "export SOME_ROOT=\"$DIR\" # DO NOT EDIT This is added by some-tools" >>$HOME_PATH/.$shellSelect
-    echo "#setting path for some-tools" >>$HOME_PATH/.$shellSelect
+    cp "$HOME_PATH"/.$shellSelect "$HOME_PATH"/.$shellSelect.backup
+    echo "" >>"$HOME_PATH"/.$shellSelect
+    echo "#Some-tools-start configuration below" >>"$HOME_PATH"/.$shellSelect
+    echo "# Your PATH before any modifications: $pathOG" >>"$HOME_PATH"/.$shellSelect
+    echo "# If you want to reset your PATH just remove all lines we created and do: export PATH=$pathOG follow by: source ~/.$shellSelect" >>"$HOME_PATH"/.$shellSelect
+    echo "export SOME_ROOT=\"$DIR\" # DO NOT EDIT This is added by some-tools" >>"$HOME_PATH"/.$shellSelect
+    echo "#setting path for some-tools" >>"$HOME_PATH"/.$shellSelect
     # echo "export PATH=\"$SOME_ROOT/bin:\$PATH\" # DO NOT EDIT This is added by some-tools" >>~/.$shellSelect
-    echo "export PATH=\"\$SOME_ROOT/bin:\$PATH\" # DO NOT EDIT This is added by some-tools" >>$HOME_PATH/.$shellSelect
-    echo "#Some-tools-end configuration" >>$HOME_PATH/.$shellSelect
-    mkdir $SOME_ROOT/bin && mkdir $SOME_ROOT/bin/PrivEsc-Lin && mkdir $SOME_ROOT/bin/PrivEsc-Win
-    log "[*] Set up done. You can now open new terminal tabs/windows or run \`source ~/.$shellSelect\` to set the new path!"
+    echo "export PATH=\"\$SOME_ROOT/bin:\$PATH\" # DO NOT EDIT This is added by some-tools" >>"$HOME_PATH"/.$shellSelect
+    echo "#Some-tools-end configuration" >>"$HOME_PATH"/.$shellSelect
+    mkdir "$SOME_ROOT"/bin && mkdir "$SOME_ROOT"/bin/PrivEsc-Lin && mkdir "$SOME_ROOT"/bin/PrivEsc-Win
+    logGood "[*] Set up done. You can now open new terminal tabs/windows or run \`source ~/.$shellSelect\` to set the new path!"
     log "[+] You can see your new path by doing: \`echo \$PATH\`"
 }
 ########## End of Functions include in setup action  ##########
@@ -183,33 +193,33 @@ function specialUpdate() {
 }
 
 function checkUpdate() {
-    cd $TOOLPATH
+    cd "$TOOLPATH"
     echo ""
     if [ -f "./.installed" ]; then
-        log "[+] $TOOL is installed, continuing..."
+        logGood "[+] $TOOL is installed, continuing..."
         if [ -d "./$TOOL/.git" ]; then
-            cd $TOOL
-            if $SOME_ROOT/check-git.sh | grep "Your repo is Behind. You Need to Pull." >/dev/null; then
+            cd "$TOOL"
+            if "$SOME_ROOT"/check-git.sh | grep "Your repo is Behind. You Need to Pull." >/dev/null; then
                 log "[+] [$TOOL] Checking for Update with checkgit."
                 $CHECKGITACTION
-                log "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
-                cd $SOME_ROOT/$TOOLPATH
+                logGood "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
+                cd "$SOME_ROOT"/"$TOOLPATH"
                 specialUpdate
             else
                 log "[+] [$TOOL] You are not behind!"
-                log "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
-                cd $SOME_ROOT/$TOOLPATH
+                logGood "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
+                cd "$SOME_ROOT"/"$TOOLPATH"
                 specialUpdate
             fi
         else
-            log "[-] [$TOOL] Not a git repo !"
+            logInfo "[-] [$TOOL] Not a git repo !"
             log "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
-            cd $SOME_ROOT/$TOOLPATH
+            cd "$SOME_ROOT"/"$TOOLPATH"
             specialUpdate
         fi
     else
         echo ""
-        log "[-] [$TOOL] No .installed file. Are you sure $TOOL is installed ?"
+        logInfo "[-] [$TOOL] No .installed file. Are you sure $TOOL is installed ?"
     fi
 }
 
@@ -219,7 +229,7 @@ function askCode() {
     whichCode=$(which code)
     if [ -x "$whichCode" ]; then
         echo ""
-        log "[+] Looks like Visual Studio Code is installed !"
+        logGood "[+] Looks like Visual Studio Code is installed !"
         echo "> Do you want to open install-tool.sh and uninstall-tool.sh with code ?"
         echo "[*] Choose 1 or 2"
         select yn in "Yes" "No"; do
@@ -245,9 +255,9 @@ function askCode() {
 }
 
 function addTool() {
-    cd $NEWTOOLDIR
-    mkdir $TOOL && cd $TOOL
-    echo $TOOL >.gitignore
+    cd "$NEWTOOLDIR"
+    mkdir "$TOOL" && cd "$TOOL"
+    echo "$TOOL" >.gitignore
     echo ".installed" >>.gitignore
     echo "echo \"This tool is installed\" > .installed" >install-tool.sh
     echo "#---Install cmd start here---" >>install-tool.sh
@@ -266,26 +276,26 @@ function addTool() {
     chmod +x uninstall-tool.sh
     ls -la
     echo ""
-    log "[+] Template creation for $TOOL is finished"
+    logGood "[+] Template creation for $TOOL is finished"
     log "[+] You can now add the installation cmd into $NEWTOOLDIR/$TOOL/install-tool.sh and unstallation cmd into $NEWTOOLDIR/$TOOL/uninstall-tool.sh"
     askCode
 }
 
 # check if tool name already exist before add-tool
 function checkName() {
-    if [ ! -d */$TOOL ]; then
+    if [ ! -d */"$TOOL" ]; then
         echo ""
         #echo "Everything good Not the same name"
     else
         echo ""
-        log "[-] This tool name is already used."
+        logInfo "[-] This tool name is already used."
         log "[*] You can use any other name, just be sure to precise the new name when doing git clone instruction in the install-tool.sh file."
         exit 1
     fi
 }
 
 function installTool() {
-    cd $TOOLPATH
+    cd "$TOOLPATH"
     if ./install-tool.sh; then
         log "[+] [$TOOL] Install finished in $TOOLPATH dir"
     else
@@ -296,33 +306,33 @@ function installTool() {
 function uninstallTool() {
     cd "$TOOLPATH"
     if [ -f ".installed" ]; then
-        if [ -x ./$TOOL/uninstall.sh ]; then
+        if [ -x ./"$TOOL"/uninstall.sh ]; then
             log "[+] [$TOOL] Removing dependencies with builtin uninstall.sh file."
-            ./$TOOL/uninstall.sh
+            ./"$TOOL"/uninstall.sh
             log "[+] [$TOOL] Continuing... We will remove tool from our project."
         else
             log "[-] [$TOOL] No builtin uninstall.sh file. Continuing... We will remove tool from our project."
         fi
         ### Deleting Symlink with uninstall-tool.sh
         if ./uninstall-tool.sh; then
-            log "[+] [$TOOL] Uninstall finished"
+            logGood "[+] [$TOOL] Uninstall finished"
         else
-            log "[-] [$TOOL] Uninstall FAILED! Probably no uninstall-tool.sh file in $TOOL dir. In most case, this is a normal output"
+            logInfo "[-] [$TOOL] Uninstall FAILED! Probably no uninstall-tool.sh file in $TOOL dir. In most case, this is a normal output"
         fi
         log "[+] [$TOOL] Removing tool dir (not removing others dependencies) and .installed file."
-        rm -rf $TOOL
+        rm -rf "$TOOL"
         rm .installed
-        log "[+] [$TOOL] Uninstall is completed."
+        logGood "[+] [$TOOL] Uninstall is completed."
     else
         echo ""
-        log "[-] This tool is not installed !"
+        logInfo "[-] This tool is not installed !"
     fi
 }
 
 function infoTool() {
-    cd $TOOLPATH
+    cd "$TOOLPATH"
     if [ -f .installed ]; then
-        cd $TOOL
+        cd "$TOOL"
         # checking for bat -> https://github.com/sharkdp/bat
         whichBat=$(which bat)
         if [ -x "$whichBat" ]; then
@@ -350,7 +360,7 @@ function infoTool() {
         fi
     else
         echo ""
-        log "[-] This tool is not installed !"
+        logInfo "[-] This tool is not installed !"
     fi
 }
 
@@ -385,7 +395,7 @@ function listInstalled() {
 
 function listCat() {
     echo ""
-    for t in $TOOL/*; do
+    for t in "$TOOL"/*; do
         if [ -f "$t/.installed" ]; then
             myColor="log"
         else
@@ -398,7 +408,7 @@ function listCat() {
 
 function listBIN() {
     # numbers of words for some_root path (preparing path)
-    pathCount=$(echo $SOME_ROOT | grep -o "/" | wc -l)
+    pathCount=$(echo "$SOME_ROOT" | grep -o "/" | wc -l)
     pathStart=$(($pathCount + 2))
     pathEnd=$(($pathStart + 1))
     # show line that are symlink and strip path
@@ -430,46 +440,46 @@ function listBIN() {
 
 ########## Functions with Actions Cat  ##########
 function installCat() {
-    for t in $TOOL/*; do
+    for t in "$TOOL"/*; do
         if [ -x "$t/install-tool.sh" ]; then
             echo ""
             log "[+] Installing $t"
-            cd $t
+            cd "$t"
             ./install-tool.sh
-            cd $DIR
+            cd "$DIR"
         else
-            log "[-] [$t] No install-tool.sh for this tool !"
+            logInfo "[-] [$t] No install-tool.sh for this tool !"
         fi
     done
 }
 
 function uninstallCat() {
-    for t in $TOOL/*; do
-        if [ -f $t/.installed ]; then
+    for t in "$TOOL"/*; do
+        if [ -f "$t"/.installed ]; then
             echo ""
             log "[*] Start Uninstalling for: $t"
-            if [ -f $t/uninstall.sh ]; then
+            if [ -f "$t"/uninstall.sh ]; then
                 log "[+] [$t] Removing dependencies with builtin uninstall.sh file."
-                cd $t
+                cd "$t"
                 ./uninstall.sh
-                cd $DIR
+                cd "$DIR"
                 log "[+] [$t] Continuing... We will remove tool from our project."
             else
-                log "[-] [$t] No builtin uninstall.sh file. Continuing... We will remove tool from our project."
+                logInfo "[-] [$t] No builtin uninstall.sh file. Continuing... We will remove tool from our project."
             fi
-            if [ -f $t/uninstall-tool.sh ]; then
-                cd $t
+            if [ -f "$t"/uninstall-tool.sh ]; then
+                cd "$t"
                 ./uninstall-tool.sh
-                cd $DIR
-                log "[+] [$t] Uninstall finished"
+                cd "$DIR"
+                logGood "[+] [$t] Uninstall finished"
             else
-                log "[-] [$t] Uninstall FAILED! Probably no uninstall-tool.sh file in $t dir. In most case, this is a normal output."
+                logInfo "[-] [$t] Uninstall FAILED! Probably no uninstall-tool.sh file in $t dir. In most case, this is a normal output."
             fi
-            temptoolname="$(echo $t | cut -d "/" -f 2)"
-            cd $t
-            rm -rf $temptoolname
+            temptoolname="$(echo "$t" | cut -d "/" -f 2)"
+            cd "$t"
+            rm -rf "$temptoolname"
             rm .installed
-            cd $DIR
+            cd "$DIR"
             log "[+] [$t] Uninstall is completed."
         else
             log "[-] [$t] Tool not installed !"
@@ -482,29 +492,29 @@ function uninstallCat() {
 function checkUpdateAll() {
     for t in */*; do
         if [ -f "$t/.installed" ]; then
-            temptoolname="$(echo $t | cut -d "/" -f 2)"
+            temptoolname="$(echo "$t" | cut -d "/" -f 2)"
             echo ""
             if [ -d "$t/$temptoolname/.git" ]; then
                 log "[*] Checking update for: $temptoolname"
-                cd $t/$temptoolname
+                cd "$t"/"$temptoolname"
                 if "$CHECKGIT" | grep "Your repo is Behind. You Need to Pull" >/dev/null; then
                     log "[+] [$t] Checking for Update with checkgit."
                     $CHECKGITACTION
-                    log "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
+                    logGood "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
                     cd ..
                     specialUpdate
-                    cd $DIR
+                    cd "$DIR"
                 else
-                    log "[+] [$t] You are not behind. $temptoolname is up to date !"
-                    cd $DIR
+                    logGood "[+] [$t] You are not behind. $temptoolname is up to date !"
+                    cd "$DIR"
                 fi
             else
-                log "[-] [$t] Not a git repo !"
+                logInfo "[-] [$t] Not a git repo !"
                 log "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
-                cd $t/$temptoolname
+                cd "$t"/"$temptoolname"
                 cd ..
                 specialUpdate
-                cd $DIR
+                cd "$DIR"
             fi
         else
             echo "[-] [$t] Tool not installed !" >/dev/null
@@ -517,11 +527,11 @@ function installAll() {
         if [ -x "$t/install-tool.sh" ]; then
             echo ""
             log "[+] Installing $t"
-            cd $t
+            cd "$t"
             ./install-tool.sh
-            cd $DIR
+            cd "$DIR"
         else
-            log "[-] [$t] No install-tool.sh for this tool !"
+            logInfo "[-] [$t] No install-tool.sh for this tool !"
         fi
     done
 }
@@ -530,45 +540,45 @@ function installAll() {
 ########## Complete Uninstall functions  ##########
 function uninstallAll() {
     for t in */*; do
-        if [ -f $t/.installed ]; then
+        if [ -f "$t"/.installed ]; then
             echo ""
-            temptoolname="$(echo $t | cut -d "/" -f 2)"
+            temptoolname="$(echo "$t" | cut -d "/" -f 2)"
             log "[*] Start Uninstalling for: $t"
-            if [ -f $t/uninstall.sh ]; then
+            if [ -f "$t"/uninstall.sh ]; then
                 log "[+] [$t] Removing dependencies with builtin uninstall.sh file."
-                cd $t
+                cd "$t"
                 ./uninstall.sh
-                cd $DIR
+                cd "$DIR"
                 log "[+] [$t] Continuing... We will remove tool from our project."
             else
-                log "[-] [$t] No builtin uninstall.sh file. Continuing... We will remove tool from our project."
+                logInfo "[-] [$t] No builtin uninstall.sh file. Continuing... We will remove tool from our project."
             fi
-            if [ -f $t/uninstall-tool.sh ]; then
-                cd $t
+            if [ -f "$t"/uninstall-tool.sh ]; then
+                cd "$t"
                 ./uninstall-tool.sh
-                cd $DIR
-                log "[+] [$t] Uninstall finished"
+                cd "$DIR"
+                logGood "[+] [$t] Uninstall finished"
             else
-                log "[-] [$t] Uninstall FAILED! Probably no uninstall-tool.sh file in $t dir. In most case, this is a normal output."
+                logInfo "[-] [$t] Uninstall FAILED! Probably no uninstall-tool.sh file in $t dir. In most case, this is a normal output."
             fi
-            cd $t
-            rm -rf $temptoolname
+            cd "$t"
+            rm -rf "$temptoolname"
             rm .installed
-            cd $DIR
-            log "[+] [$t] Uninstall is completed."
+            cd "$DIR"
+            logGood "[+] [$t] Uninstall is completed."
         else
-            log "[-] [$t] Tool not installed !"
+            logInfo "[-] [$t] Tool not installed !"
         fi
     done
 }
 
 function completeUninstall() {
     log "[+] [$t] Removing all installed tools."
-    cd $HOME_PATH
+    cd "$HOME_PATH"
     sed '/Some-tools-start/,/Some-tools-end/d' .zshrc >.zshrc.new
     mv .zshrc .zshrc.backup2
     mv .zshrc.new .zshrc
-    cd $DIR
+    cd "$DIR"
     uninstallAll
     rm -rf bin
     rm -rf __pycache__
