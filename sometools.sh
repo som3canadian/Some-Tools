@@ -5,7 +5,8 @@
 # idea / bugs -> somecanadian0@gmail.com
 #####
 # New Idea/bug here:
-#
+# list-cat bug
+# git-search
 #####
 
 function usage() {
@@ -29,6 +30,7 @@ Actions:
       install-all          Install all tools
       check-update         Check Update for an installed tool and Update it if you want
       check-update-all     Check Update for all installed tools
+      git-search           Search for a tool on github
       self-update          Check Update for Some-Tools and Update if you want
       add-tool             Create template for a new tool (./$(basename "$0") add-tool newtoolname category)
       uninstall            Uninstall a tool (Trying uninstall with the tool built-in uninstall.sh before Cleaning from our project)
@@ -47,15 +49,15 @@ END
 }
 
 function log() {
-    echo -e "${PURPLE}${BOLD}$@${RESET}"
+    echo -e "${PURPLE}${BOLD}$*${RESET}"
 }
 
 function logInfo() {
-    echo -e "${YELLOW}${BOLD}$@${RESET}"
+    echo -e "${YELLOW}${BOLD}$*${RESET}"
 }
 
 function logGood() {
-    echo -e "${GREEN}${BOLD}$@${RESET}"
+    echo -e "${GREEN}${BOLD}$*${RESET}"
 }
 
 GREEN='\033[0;32m'
@@ -68,7 +70,7 @@ ACTION=$1
 TOOL="$2"
 NEWTOOLDIR=$3
 
-if [ -z "$TOOL" -a "$ACTION" != "list" -a "$ACTION" != "list-installed" -a "$ACTION" != "list-bin" -a "$ACTION" != "setup" -a "$ACTION" != "self-update" -a "$ACTION" != "help" -a "$ACTION" != "check-update-all" -a "$ACTION" != "install-all" -a "$ACTION" != "complete-uninstall" ]; then
+if [ -z "$TOOL" ] && [ "$ACTION" != "list" ] && [ "$ACTION" != "list-installed" ] && [ "$ACTION" != "list-bin" ] && [ "$ACTION" != "setup" ] && [ "$ACTION" != "self-update" ] && [ "$ACTION" != "help" ] && [ "$ACTION" != "check-update-all" ] && [ "$ACTION" != "install-all" ] && [ "$ACTION" != "complete-uninstall" ]; then
     usage
     exit 1
 fi
@@ -102,7 +104,7 @@ function toolVAR() {
         TOOLPATH="$tempTOOLPATH"
         rm tools.txt
     else
-        TOOLPATH="$(dirname */"$TOOL"/install-tool.sh)"
+        TOOLPATH="$(dirname ./*/"$TOOL"/install-tool.sh)"
     fi
 }
 toolVAR
@@ -585,6 +587,58 @@ function completeUninstall() {
 }
 ########## End of Complete Uninstall functions  ##########
 
+############### Git Search ###################################
+function gitSearch() {
+  # search query
+  #searchQuery="$2"
+  #searchMax="$3"
+  searchQuery="$TOOL"
+  searchMax="$NEWTOOLDIR"
+  # Default value is set to 10. Can use custom number by using as 2nd argument in the cmd. Max is 100 per page
+  defvalSearch=${3:-10}
+  searchMax="${defvalSearch}"
+
+  # Max number of page. Change this if you want to see more than 100 results.
+  searchPage="1"
+  # Sort you search: best-match, stars, forks, help-wanted-issues, updated.
+  sortSearch="stars"
+  searchCMD="https://api.github.com/search/repositories?q=$searchQuery&per_page=$searchMax&page=$searchPage&sort=$sortSearch"
+  #echo "$searchCMD"
+
+  http GET "$searchCMD" | jq ".items" | grep "full_name\|svn_url\|clone_url\|description\|stargazers_count\|forks_count" | cut -d':' -f2-10 | tr -d ',' | tr -d '"' >data.json
+
+  COUNTER=1
+  while read -r line1; do
+    read -r line2
+    read -r line3
+    read -r line4
+    read -r line5
+    read -r line6
+    echo ""
+    logInfo "[$COUNTER] Name: $line1"
+    echo "[+] Description: $line2"
+    echo "[+] Stars Count: $line5"
+    echo "[+] Forks Count: $line6"
+    echo "[+] URL: $line4"
+    echo "[+] Clone it: $line3"
+    COUNTER=$((COUNTER + 1))
+  done <data.json
+
+  totalCount=$(http GET "$searchCMD" | jq "." | grep "total_count" | cut -d':' -f2 | xargs | tr -d ',')
+  if [[ "$totalCount" -le "$searchMax" ]]; then
+    #echo "Result is $searchMax or less: $totalCount"
+    finalCount="$totalCount"
+  else
+    #echo "Result is more then $searchMax: $totalCount"
+    finalCount="$searchMax"
+  fi
+  echo ""
+  echo "Results shown: $finalCount"
+  echo "Total results: $totalCount"
+  rm data.json
+}
+############### End Git Search ###################################
+
 case $ACTION in
 setup)
     requirePackages
@@ -640,6 +694,9 @@ complete-uninstall)
 self-update)
     log "[+] [$TOOL] Checking Update for Some-Tools"
     $CHECKGITACTION
+    ;;
+git-search)
+    gitSearch "$@"
     ;;
 *) ;;
 

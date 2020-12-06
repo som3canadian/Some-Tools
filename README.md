@@ -42,6 +42,7 @@ See how to install Some-Tools with a brand new Kali 2020.x VM with only **5 comm
 - `install-all` - Install all tools
 - `check-update` - Check Update for an installed tools and Update it if you want.
 - `check-update-all` - Check Update for all installed tools
+- `git-search` - Search for a tool on github
 - `self-update` - Check Update for Some-Tools and Update if you want
 - `add-tool` - Create template for a new tool (./sometools.sh add-tool newtoolname category)
 - `uninstall` - Uninstall a tool (Trying uninstall with the tool built-in uninstall.sh before Cleaning from our project)
@@ -52,13 +53,20 @@ See how to install Some-Tools with a brand new Kali 2020.x VM with only **5 comm
 
 ## Basic usage
 
+Most used actions are:
+
+- list
+- install
+- check-update-all
+- self-update
+
 ```bash
 # Inital setup. Should be the first command
 $ ./sometools.sh setup
 # List all available tools
 $ ./sometools.sh list
 # List all available tools of a category
-$ ./sometools.sh list-cat
+$ ./sometools.sh list-cat Utilities
 # List install tool(s)
 $ ./sometools.sh list-installed
 # List installed tools accessible from anywhere on your machine
@@ -71,17 +79,19 @@ $ ./sometools.sh install 4
 $ ./sometools.sh install-cat PrivEsc-Win
 # Install All tools
 $ ./sometools.sh install all
-# Show README.md of an installed tool
-$ ./sometools.sh info unicorn
-# Using ID instead of tool name
-$ ./sometools.sh info 4
+# Check update for all installed tools
+# check-update-all command is the main reason why I made this
+$ ./sometools.sh check-update-all
 # Check for update
 $ ./sometools.sh check-update PEAS
 # Using ID instead of tool name
 $ ./sometools.sh check-update 9
-# Check update for all installed tools
-# check-update all command is the main reason why I made this
-$ ./sometools.sh check-update all
+# Search for a tool on github
+$ ./sometools.sh git-search LinEnum
+# Show README.md of an installed tool
+$ ./sometools.sh info unicorn
+# Using ID instead of tool name
+$ ./sometools.sh info 4
 # Add a new tool
 $ ./sometools.sh add-tool newtoolname PrivEsc-Lin
 # Uninstall a tool
@@ -96,11 +106,11 @@ $ ./sometools.sh self-update
 $ ./sometools.sh complete-uninstall
 ```
 
-![Some-Tools Help](images/sometools-help.jpg)
+![Some-Tools Help](images/some-tools-help.jpg)
 
 ## The Bin directory
 
-- The bin directory will be created when doing the setup action. This will be the dir path that we will add to our shell $PATH (`your/install/dir/Some-Tools/bin`). In the bin dir we will put copy(symlink) of tool(s) that we want executable everywhere on our machine.For example a tool like `unicorn.py`, you may want to execute `unicorn` from everywhere you want.
+- The bin directory will be created when doing the setup action. This will be the dir path that we will add to our shell $PATH (`your/install/dir/Some-Tools/bin`). In the bin dir we will put copy(symlink) of tool(s) that we want executable everywhere on our machine. For example a tool like `unicorn.py`, you may want to execute `unicorn` from everywhere you want.
 
 - The setup action will aslo create `bin/PrivEsc-Lin` and `bin/PrivEsc-Win` in the process. In this directory we will keep our privilege escalation scripts. So, when you want to use your tools, you can fire a python http server and quickly upload the scripts you desire. The scripts in those folders **will be update at the same time you update the tool(s)** with check-update action.
 
@@ -239,8 +249,8 @@ Note:
 
 - **setup** (Setup Process):
   - **Should be the first command you run.**
-  - First it will ask if you use `.bashrc` or `.zshrc` (built in setup action will not work if you are not using one of the two shell)
-  - After that we will setup $SOME_ROOT variable et create a new $PATH
+  - First it will ask you which shell you want to use between `.bashrc` or `.zshrc` (built in setup action will not work if you are not using one of the two shell)
+  - The script will set $SOME_ROOT variable
   - After the setup, You can open new terminal tabs/windows or source your shell (.bashrc or .zshrc) in the current terminal to activate the new path. To see you new path after you can do `echo $PATH`
   - In you shell file (.bashrc or .zshrc), we will copy you $PATH before we make modification. It will be commented few lines before the end of your shell file. So if you want to reset your path to before Some-Tools setup you can copy the command commented in you shell file, cleanup what we created in the file and finally source it.
   - Creation of Bin directory. (bin, bin/PrivEsc-Lin and bin/PrivEsc-Win)
@@ -291,6 +301,17 @@ Note:
   ```
 
   - Why two check-git ? check-git.sh only tell if the tool is behind or not. If we detect a newer version, we will ask to execute check-git-action.sh.
+
+- **git-search**
+  - Search a repo on github
+  - Result will be sort by number of stars (you can change the `sortSearch` variable if you want)
+  - By default, number of results will be 10
+
+  ```bash
+  $ ./sometools.sh git-search LinEnum
+  # Output more results. Example with 15 (default is 10)
+  $ ./sometools.sh git-search LinEnum 15
+  ```
 
 - **self-update**:
   - That function help keeping this tool (Some-Tools) up to date. If you are behind it will ask you if you want to `pull`.
