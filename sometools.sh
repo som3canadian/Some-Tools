@@ -5,9 +5,9 @@
 # idea / bugs -> somecanadian0@gmail.com
 #####
 # New Idea/bug here:
-# list-cat bug
-# git-search
+# None at the moment
 #####
+
 
 function usage() {
     cat <<END
@@ -114,9 +114,17 @@ toolVAR
 # function to help you install require packages at the begining of the setup process.
 function requirePackages() {
     #sudo apt install git python-pip build-essential libtool
-    sudo apt install python3-pip python3-scrapy
+    sudo apt install python3-pip python3-scrapy python
     ## Python3 dependencies
     pip3 install scrapy
+    if ! [ -x "$(command -v pip)" ]; then
+        echo ""
+        echo "[*] Installing pip for python2"
+        wget https://bootstrap.pypa.io/get-pip.py
+        sudo python get-pip.py
+        rm get-pip.py
+        pip install --upgrade setuptools
+    fi
 }
 
 # bashrc or zshrc ?
@@ -143,7 +151,7 @@ function whichShell() {
 ########## Functions include in setup action  ##########
 function setUp() {
     echo "We will use $shellSelect as shell"
-    echo "Do you want to continue the setup process ?"
+    log "Do you want to continue the setup process ?"
     select yn in "Yes" "No"; do
         case $yn in
         Yes) break ;;
@@ -589,53 +597,53 @@ function completeUninstall() {
 
 ############### Git Search ###################################
 function gitSearch() {
-  # search query
-  #searchQuery="$2"
-  #searchMax="$3"
-  searchQuery="$TOOL"
-  searchMax="$NEWTOOLDIR"
-  # Default value is set to 10. Can use custom number by using as 2nd argument in the cmd. Max is 100 per page
-  defvalSearch=${3:-10}
-  searchMax="${defvalSearch}"
+    # search query
+    #searchQuery="$2"
+    #searchMax="$3"
+    searchQuery="$TOOL"
+    searchMax="$NEWTOOLDIR"
+    # Default value is set to 10. Can use custom number by using as 2nd argument in the cmd. Max is 100 per page
+    defvalSearch=${3:-10}
+    searchMax="${defvalSearch}"
 
-  # Max number of page. Change this if you want to see more than 100 results.
-  searchPage="1"
-  # Sort you search: best-match, stars, forks, help-wanted-issues, updated.
-  sortSearch="stars"
-  searchCMD="https://api.github.com/search/repositories?q=$searchQuery&per_page=$searchMax&page=$searchPage&sort=$sortSearch"
-  #echo "$searchCMD"
+    # Max number of page. Change this if you want to see more than 100 results.
+    searchPage="1"
+    # Sort you search: best-match, stars, forks, help-wanted-issues, updated.
+    sortSearch="stars"
+    searchCMD="https://api.github.com/search/repositories?q=$searchQuery&per_page=$searchMax&page=$searchPage&sort=$sortSearch"
+    #echo "$searchCMD"
 
-  http GET "$searchCMD" | jq ".items" | grep "full_name\|svn_url\|clone_url\|description\|stargazers_count\|forks_count" | cut -d':' -f2-10 | tr -d ',' | tr -d '"' >data.json
+    http GET "$searchCMD" | jq ".items" | grep "full_name\|svn_url\|clone_url\|description\|stargazers_count\|forks_count" | cut -d':' -f2-10 | tr -d ',' | tr -d '"' >data.json
 
-  COUNTER=1
-  while read -r line1; do
-    read -r line2
-    read -r line3
-    read -r line4
-    read -r line5
-    read -r line6
+    COUNTER=1
+    while read -r line1; do
+        read -r line2
+        read -r line3
+        read -r line4
+        read -r line5
+        read -r line6
+        echo ""
+        logInfo "[$COUNTER] Name: $line1"
+        echo "[+] Description: $line2"
+        echo "[+] Stars Count: $line5"
+        echo "[+] Forks Count: $line6"
+        echo "[+] URL: $line4"
+        echo "[+] Clone it: $line3"
+        COUNTER=$((COUNTER + 1))
+    done <data.json
+
+    totalCount=$(http GET "$searchCMD" | jq "." | grep "total_count" | cut -d':' -f2 | xargs | tr -d ',')
+    if [[ "$totalCount" -le "$searchMax" ]]; then
+        #echo "Result is $searchMax or less: $totalCount"
+        finalCount="$totalCount"
+    else
+        #echo "Result is more then $searchMax: $totalCount"
+        finalCount="$searchMax"
+    fi
     echo ""
-    logInfo "[$COUNTER] Name: $line1"
-    echo "[+] Description: $line2"
-    echo "[+] Stars Count: $line5"
-    echo "[+] Forks Count: $line6"
-    echo "[+] URL: $line4"
-    echo "[+] Clone it: $line3"
-    COUNTER=$((COUNTER + 1))
-  done <data.json
-
-  totalCount=$(http GET "$searchCMD" | jq "." | grep "total_count" | cut -d':' -f2 | xargs | tr -d ',')
-  if [[ "$totalCount" -le "$searchMax" ]]; then
-    #echo "Result is $searchMax or less: $totalCount"
-    finalCount="$totalCount"
-  else
-    #echo "Result is more then $searchMax: $totalCount"
-    finalCount="$searchMax"
-  fi
-  echo ""
-  echo "Results shown: $finalCount"
-  echo "Total results: $totalCount"
-  rm data.json
+    echo "Results shown: $finalCount"
+    echo "Total results: $totalCount"
+    rm data.json
 }
 ############### End Git Search ###################################
 

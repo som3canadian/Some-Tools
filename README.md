@@ -49,7 +49,7 @@ See how to install Some-Tools with a brand new Kali 2020.x VM with only **5 comm
 - `uninstall-cat` - Uninstall all tools of a Category
 - `complete-uninstall` - Delete all installed tools, remove bin directory and delete our modification in .zshrc or .bashrc
 
-**note**: No need to specify the category names when using a tool. Just use tool name.
+**Note**: No need to specify the category names when using a tool. Just use tool name or ID. You can see tool ID by doing `./sometools.sh list`
 
 ## Basic usage
 
@@ -58,6 +58,7 @@ Most used actions are:
 - list
 - install
 - check-update-all
+- git-search
 - self-update
 
 ```bash
@@ -170,23 +171,26 @@ $ ./sometools.sh list
 [27] PrivEsc-Win/Windows-Privilege-Escalation
 [28] PrivEsc-Win/mimikatz
 [29] PrivEsc-Win/windows-privesc-check
-[30] Utilities/SirepRAT
-[31] Utilities/Windows-Tools
-[32] Utilities/chisel
-[33] Utilities/cryptz
-[34] Utilities/decodify
-[35] Utilities/evil-winrm
-[36] Utilities/impacket
-[37] Utilities/nishang
-[38] Utilities/nmapAutomator
-[39] Utilities/pypykatz
-[40] Utilities/revshellgen
-[41] Web/dirsearch
-[42] Web/kadimus
-[43] Web/windows-php-reverse-shell
-[44] Web/wwwolf-php-webshell
-[45] Wordpress/malicious-wordpress-plugin
-[46] Wordpress/wordpress-exploit-framework
+[30] Utilities/MyJWT
+[31] Utilities/SirepRAT
+[32] Utilities/Windows-Tools
+[33] Utilities/chisel
+[34] Utilities/crackhash
+[35] Utilities/cryptz
+[36] Utilities/decodify
+[37] Utilities/evil-winrm
+[38] Utilities/impacket
+[39] Utilities/nishang
+[40] Utilities/nmapAutomator
+[41] Utilities/pypykatz
+[42] Utilities/revshellgen
+[43] Web/LFISuite
+[44] Web/byp4xx
+[45] Web/dirsearch
+[46] Web/windows-php-reverse-shell
+[47] Web/wwwolf-php-webshell
+[48] Wordpress/malicious-wordpress-plugin
+[49] Wordpress/wordpress-exploit-framework
 ```
 
 ### Detailed
@@ -222,9 +226,11 @@ $ ./sometools.sh list
 | PrivEsc-Win   | Windows-Exploit-Suggester    | <https://github.com/AonCyberLabs/Windows-Exploit-Suggester>                 |
 | PrivEsc-Win   | mimikatz                     | <https://github.com/gentilkiwi/mimikatz>                                    |
 | PrivEsc-Win   | windows-privesc-check        | <https://github.com/pentestmonkey/windows-privesc-check>                    |
+| Utilities     | MyJWT                        | <https://github.com/mBouamama/MyJWT>                                        |
 | Utilities     | SirepRAT                     | <https://github.com/SafeBreach-Labs/SirepRAT.git>                           |
 | Utilities     | Windows-Tools                | <https://github.com/som3canadian/Windows-Tools.git>                         |
 | Utilities     | chisel                       | <https://github.com/jpillora/chisel>                                        |
+| Utilities     | crackhash                    | <https://github.com/5h4d0wb0y/crackhash>                                    |
 | Utilities     | cryptz                       | <https://github.com/iinc0gnit0/cryptz>                                      |
 | Utilities     | decodify                     | <https://github.com/s0md3v/Decodify>                                        |
 | Utilities     | evil-winrm                   | <https://github.com/Hackplayers/evil-winrm>                                 |
@@ -233,8 +239,9 @@ $ ./sometools.sh list
 | Utilities     | nmapAutomator                | <https://github.com/21y4d/nmapAutomator>                                    |
 | Utilities     | pypykatz                     | <https://github.com/skelsec/pypykatz>                                       |
 | Utilities     | revshellgen                  | <https://github.com/t0thkr1s/revshellgen>                                   |
+| Web           | LFISuite                     | <https://github.com/D35m0nd142/LFISuite.git>                                |
+| Web           | byp4xx                       | <https://github.com/lobuhi/byp4xx.git>                                      |
 | Web           | dirsearch                    | <https://github.com/maurosoria/dirsearch>                                   |
-| Web           | Kadimus                      | <https://github.com/P0cL4bs/kadimus>                                        |
 | Web           | windows-php-reverse-shell    | <https://github.com/Dhayalanb/windows-php-reverse-shell.git>                |
 | Web           | wwwolf-php-webshell          | <https://github.com/WhiteWinterWolf/wwwolf-php-webshell>                    |
 | Wordpress     | malicious-wordpress-plugin   | <https://github.com/wetw0rk/malicious-wordpress-plugin.git>                 |
@@ -248,7 +255,7 @@ Note:
 ## Actions Detailed
 
 - **setup** (Setup Process):
-  - **Should be the first command you run.**
+  - **This should be the first command you run.**
   - First it will ask you which shell you want to use between `.bashrc` or `.zshrc` (built in setup action will not work if you are not using one of the two shell)
   - The script will set $SOME_ROOT variable
   - After the setup, You can open new terminal tabs/windows or source your shell (.bashrc or .zshrc) in the current terminal to activate the new path. To see you new path after you can do `echo $PATH`
@@ -312,6 +319,8 @@ Note:
   # Output more results. Example with 15 (default is 10)
   $ ./sometools.sh git-search LinEnum 15
   ```
+
+  ![Some-Tools Help](images/git-search.jpg)
 
 - **self-update**:
   - That function help keeping this tool (Some-Tools) up to date. If you are behind it will ask you if you want to `pull`.
