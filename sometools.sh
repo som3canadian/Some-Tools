@@ -5,7 +5,9 @@
 # idea / bugs -> somecanadian0@gmail.com
 #####
 # New Idea/bug here:
-# None at the moment
+# https://github.com/ffuf/ffuf ?
+# bug symlink chisel
+# New Recon(enum) Category
 #####
 
 

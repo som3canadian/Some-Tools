@@ -170,27 +170,31 @@ $ ./sometools.sh list
 [26] PrivEsc-Win/Windows-Exploit-Suggester
 [27] PrivEsc-Win/Windows-Privilege-Escalation
 [28] PrivEsc-Win/mimikatz
-[29] PrivEsc-Win/windows-privesc-check
-[30] Utilities/MyJWT
-[31] Utilities/SirepRAT
-[32] Utilities/Windows-Tools
-[33] Utilities/chisel
-[34] Utilities/crackhash
-[35] Utilities/cryptz
-[36] Utilities/decodify
-[37] Utilities/evil-winrm
-[38] Utilities/impacket
-[39] Utilities/nishang
-[40] Utilities/nmapAutomator
-[41] Utilities/pypykatz
-[42] Utilities/revshellgen
-[43] Web/LFISuite
-[44] Web/byp4xx
-[45] Web/dirsearch
-[46] Web/windows-php-reverse-shell
-[47] Web/wwwolf-php-webshell
-[48] Wordpress/malicious-wordpress-plugin
-[49] Wordpress/wordpress-exploit-framework
+[29] PrivEsc-Win/wesng
+[30] PrivEsc-Win/windows-privesc-check
+[31] Utilities/GraphQLmap
+[32] Utilities/MyJWT
+[33] Utilities/SirepRAT
+[34] Utilities/Windows-Tools
+[35] Utilities/chisel
+[36] Utilities/crackhash
+[37] Utilities/cryptz
+[38] Utilities/decodify
+[39] Utilities/enum4linux-ng
+[40] Utilities/evil-winrm
+[41] Utilities/impacket
+[42] Utilities/nishang
+[43] Utilities/nmapAutomator
+[44] Utilities/pypykatz
+[45] Utilities/revshellgen
+[46] Web/LFISuite
+[47] Web/byp4xx
+[48] Web/dirsearch
+[49] Web/php-reverse-shell
+[50] Web/windows-php-reverse-shell
+[51] Web/wwwolf-php-webshell
+[52] Wordpress/malicious-wordpress-plugin
+[53] Wordpress/wordpress-exploit-framework
 ```
 
 ### Detailed
@@ -225,7 +229,9 @@ $ ./sometools.sh list
 | PrivEsc-Win   | Windows-Privilege-Escalation | <https://github.com/frizb/Windows-Privilege-Escalation>                     |
 | PrivEsc-Win   | Windows-Exploit-Suggester    | <https://github.com/AonCyberLabs/Windows-Exploit-Suggester>                 |
 | PrivEsc-Win   | mimikatz                     | <https://github.com/gentilkiwi/mimikatz>                                    |
+| PrivEsc-Win   | wesng                        | <https://github.com/bitsadmin/wesng>                                        |
 | PrivEsc-Win   | windows-privesc-check        | <https://github.com/pentestmonkey/windows-privesc-check>                    |
+| Utilities     | GraphQLmap                   | <https://github.com/swisskyrepo/GraphQLmap>                                 |
 | Utilities     | MyJWT                        | <https://github.com/mBouamama/MyJWT>                                        |
 | Utilities     | SirepRAT                     | <https://github.com/SafeBreach-Labs/SirepRAT.git>                           |
 | Utilities     | Windows-Tools                | <https://github.com/som3canadian/Windows-Tools.git>                         |
@@ -233,6 +239,7 @@ $ ./sometools.sh list
 | Utilities     | crackhash                    | <https://github.com/5h4d0wb0y/crackhash>                                    |
 | Utilities     | cryptz                       | <https://github.com/iinc0gnit0/cryptz>                                      |
 | Utilities     | decodify                     | <https://github.com/s0md3v/Decodify>                                        |
+| Utilities     | enum4linux-ng                | <https://github.com/cddmp/enum4linux-ng>                                    |
 | Utilities     | evil-winrm                   | <https://github.com/Hackplayers/evil-winrm>                                 |
 | Utilities     | impacket                     | <https://github.com/SecureAuthCorp/impacket>                                |
 | Utilities     | nishang                      | <https://github.com/samratashok/nishang>                                    |
@@ -242,6 +249,7 @@ $ ./sometools.sh list
 | Web           | LFISuite                     | <https://github.com/D35m0nd142/LFISuite.git>                                |
 | Web           | byp4xx                       | <https://github.com/lobuhi/byp4xx.git>                                      |
 | Web           | dirsearch                    | <https://github.com/maurosoria/dirsearch>                                   |
+| Web           | php-reverse-shell            | <https://github.com/ivan-sincek/php-reverse-shell>                          |
 | Web           | windows-php-reverse-shell    | <https://github.com/Dhayalanb/windows-php-reverse-shell.git>                |
 | Web           | wwwolf-php-webshell          | <https://github.com/WhiteWinterWolf/wwwolf-php-webshell>                    |
 | Wordpress     | malicious-wordpress-plugin   | <https://github.com/wetw0rk/malicious-wordpress-plugin.git>                 |
