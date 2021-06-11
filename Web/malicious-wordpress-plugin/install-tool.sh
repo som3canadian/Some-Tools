@@ -5,5 +5,5 @@ cd malicious-wordpress-plugin
 chmod +x wordpwn.py
 # symlink template
 cd $SOME_ROOT/bin
-ln -s "$SOME_ROOT/Wordpress/malicious-wordpress-plugin/malicious-wordpress-plugin/wordpwn.py" "wordpwn"
+ln -s "$SOME_ROOT/Web/malicious-wordpress-plugin/malicious-wordpress-plugin/wordpwn.py" "wordpwn"
 #---Installation cmd end here---

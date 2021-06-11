@@ -1,6 +1,6 @@
 echo "This tool is installed" > .installed
 #---Install cmd start here---
-sudo apt install python3-pip python3-argcomplete xclip
+sudo apt install python3-pip python3-argcomplete xclip -y
 git clone https://github.com/Bashfuscator/Bashfuscator
 cd Bashfuscator
 python3 setup.py install --user

@@ -12,11 +12,11 @@ cd $SOME_ROOT/bin/PrivEsc-Win
 ### bat
 ln -s "$SOME_ROOT/PrivEsc-Lin/PEAS/PEAS/winPEAS/winPEASbat/winPEAS.bat" "winPEAS.bat"
 ### exe obfuscated
-ln -s "$SOME_ROOT/PrivEsc-Lin/PEAS/PEAS/winPEAS/winPEASexe/winPEAS/bin/Obfuscated Releases/winPEASany.exe" "winPEASanyObf.exe"
-ln -s "$SOME_ROOT/PrivEsc-Lin/PEAS/PEAS/winPEAS/winPEASexe/winPEAS/bin/Obfuscated Releases/winPEASx64.exe" "winPEASx64Obf.exe"
-ln -s "$SOME_ROOT/PrivEsc-Lin/PEAS/PEAS/winPEAS/winPEASexe/winPEAS/bin/Obfuscated Releases/winPEASx86.exe" "winPEASx86Obf.exe"
+ln -s "$SOME_ROOT/PrivEsc-Lin/PEAS/PEAS/winPEAS/winPEASexe/binaries/Obfuscated Releases/winPEASany.exe" "winPEASanyObf.exe"
+ln -s "$SOME_ROOT/PrivEsc-Lin/PEAS/PEAS/winPEAS/winPEASexe/binaries/Obfuscated Releases/winPEASx64.exe" "winPEASx64Obf.exe"
+ln -s "$SOME_ROOT/PrivEsc-Lin/PEAS/PEAS/winPEAS/winPEASexe/binaries/Obfuscated Releases/winPEASx86.exe" "winPEASx86Obf.exe"
 ### exe normal
-ln -s "$SOME_ROOT/PrivEsc-Lin/PEAS/PEAS/winPEAS/winPEASexe/winPEAS/bin/Release/winPEAS.exe" "winPEASany.exe"
-ln -s "$SOME_ROOT/PrivEsc-Lin/PEAS/PEAS/winPEAS/winPEASexe/winPEAS/bin/x64/Release/winPEAS.exe" "winPEASx64.exe"
-ln -s "$SOME_ROOT/PrivEsc-Lin/PEAS/PEAS/winPEAS/winPEASexe/winPEAS/bin/x86/Release/winPEAS.exe" "winPEASx86.exe"
+ln -s "$SOME_ROOT/PrivEsc-Lin/PEAS/PEAS/winPEAS/winPEASexe/binaries/Release/winPEASany.exe" "winPEASany.exe"
+ln -s "$SOME_ROOT/PrivEsc-Lin/PEAS/PEAS/winPEAS/winPEASexe/binaries/x64/Release/winPEASx64.exe" "winPEASx64.exe"
+ln -s "$SOME_ROOT/PrivEsc-Lin/PEAS/PEAS/winPEAS/winPEASexe/binaries/x86/Release/winPEASx86.exe" "winPEASx86.exe"
 #---Installation cmd end here---

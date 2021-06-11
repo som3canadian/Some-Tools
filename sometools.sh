@@ -5,8 +5,14 @@
 # idea / bugs -> somecanadian0@gmail.com
 #####
 # New Idea/bug here:
+# https://github.com/felamos/weirdhta
+# https://github.com/hashcat/kwprocessor
+# https://raw.githubusercontent.com/hashcat/kwprocessor/master/keymaps/en-us.keymap
+# https://github.com/nccgroup/Winpayloads
+# https://github.com/sevagas/macro_pack
+# https://github.com/spicesouls/onelinepy
+# https://github.com/cyberstruggle/whitepass
 # https://github.com/ffuf/ffuf ?
-# bug symlink chisel
 # New Recon(enum) Category
 #####
 
@@ -116,13 +122,11 @@ toolVAR
 # function to help you install require packages at the begining of the setup process.
 function requirePackages() {
     #sudo apt install git python-pip build-essential libtool
-    sudo apt install python3-pip python3-scrapy python
-    ## Python3 dependencies
-    pip3 install scrapy
+    sudo apt install python3-pip python httpie jq
     if ! [ -x "$(command -v pip)" ]; then
         echo ""
         echo "[*] Installing pip for python2"
-        wget https://bootstrap.pypa.io/get-pip.py
+        wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
         sudo python get-pip.py
         rm get-pip.py
         pip install --upgrade setuptools
@@ -220,8 +224,8 @@ function checkUpdate() {
             else
                 log "[+] [$TOOL] You are not behind!"
                 logGood "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
-                cd "$SOME_ROOT"/"$TOOLPATH"
-                specialUpdate
+                ###cd "$SOME_ROOT"/"$TOOLPATH"
+                ###specialUpdate
             fi
         else
             logInfo "[-] [$TOOL] Not a git repo !"

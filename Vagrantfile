@@ -7,7 +7,6 @@ SCRIPT
 Vagrant.configure("2") do |config|
   config.vm.box = "nicmilot/kali-full-2020"
   config.vm.box_version = "1.3.0"
-  config.vm.network :forwarded_port, guest: 22, host: 2221, auto_correct: true
   config.vm.provider "vmware_desktop"
 #  config.vm.provider "virtualbox"
   config.vm.hostname = "kali-full"

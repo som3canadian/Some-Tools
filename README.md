@@ -2,13 +2,15 @@
 
 Manage all your pentest tools in one place and keep them up to date with one command 😎
 
+The goal of sometools is to be able to manage all your tools that are not include in Kali or that `sudo apt install` is not available. Sometools works better if tools are a repo but it can be tweak to works without it.
+
 <br>
 
 ➡️ As seen on Kitploit: <https://www.kitploit.com/2020/09/some-tools-install-and-keep-up-to-date.html> ⭐
 
 ## Why
 
-I was looking for a way to manage and **keep up to date** some tools that are not included in Kali-Linux. For example, I was looking for an easy way to manage privilege escalation scripts. One day I saw sec-tools from eugenekolo (which you can see at the bottom of the page) and it gave me the motivation to start working on mine right away.
+I was looking for a way to manage and **keep up to date** some tools that are not included in Kali-Linux. For example, I was looking for an easy way to manage privilege escalation scripts. One day I saw sec-tools from eugenekolo (which you can see at the bottom of the page) and it gave me the motivation to start working on mine right away. My main motivation was the `check-update-all` command, which let you update all your installed tools smoothly.
 
 But keep in mind that is different. I built this for people that are working with Kali. Should work on other distro but I didn't include tool like Burp Suite or SQLmap because it comes in Kali by default.
 
@@ -23,10 +25,6 @@ $ ./sometools.sh list
 # you can look in your .zshrc or .bashrc if you are not sure that the installation worked.
 # For more info see Actions Detailed section.
 ```
-
-### Familiar with Vagrant ?
-
-See how to install Some-Tools with a brand new Kali 2020.x VM with only **5 commands** in the [Vagrantfile section](#Vagrantfile).
 
 ## Actions Summary
 
@@ -107,7 +105,7 @@ $ ./sometools.sh self-update
 $ ./sometools.sh complete-uninstall
 ```
 
-![Some-Tools Help](images/some-tools-help.jpg)
+![Some-Tools Help](images/sometools-help.png)
 
 ## The Bin directory
 
@@ -138,66 +136,7 @@ autoload -U $fpath[1]/*(.:t)
 
 ### Summary
 
-```bash
-$ ./sometools.sh list
-
-# In order, columns are: ID, category name and tool name
-[1] Evasion/Bashfuscator
-[2] Evasion/PyFuscation
-[3] Evasion/tvasion
-[4] Evasion/unicorn
-[5] Exploit-Win/windows-kernel-exploits
-[6] PrivEsc-Lin/BeRoot
-[7] PrivEsc-Lin/LinEnum
-[8] PrivEsc-Lin/LinPwn
-[9] PrivEsc-Lin/PEAS
-[10] PrivEsc-Lin/SUID3NUM
-[11] PrivEsc-Lin/SetUID
-[12] PrivEsc-Lin/linux-enum-mod
-[13] PrivEsc-Lin/linux-exploit-suggester
-[14] PrivEsc-Lin/linux-exploit-suggester-2
-[15] PrivEsc-Lin/linuxprivchecker
-[16] PrivEsc-Lin/lse
-[17] PrivEsc-Lin/pspy
-[18] PrivEsc-Lin/setuid-wrapper
-[19] PrivEsc-Lin/unix-privesc-check
-[20] PrivEsc-Win/JAWS
-[21] PrivEsc-Win/Powerless
-[22] PrivEsc-Win/Privesc
-[23] PrivEsc-Win/SessionGopher
-[24] PrivEsc-Win/Sherlock
-[25] PrivEsc-Win/WinPwn
-[26] PrivEsc-Win/Windows-Exploit-Suggester
-[27] PrivEsc-Win/Windows-Privilege-Escalation
-[28] PrivEsc-Win/mimikatz
-[29] PrivEsc-Win/wesng
-[30] PrivEsc-Win/windows-privesc-check
-[31] Utilities/GraphQLmap
-[32] Utilities/MyJWT
-[33] Utilities/SirepRAT
-[34] Utilities/Windows-Tools
-[35] Utilities/chisel
-[36] Utilities/crackhash
-[37] Utilities/cryptz
-[38] Utilities/decodify
-[39] Utilities/enum4linux-ng
-[40] Utilities/evil-winrm
-[41] Utilities/impacket
-[42] Utilities/nishang
-[43] Utilities/nmapAutomator
-[44] Utilities/pypykatz
-[45] Utilities/revshellgen
-[46] Web/LFISuite
-[47] Web/byp4xx
-[48] Web/dirsearch
-[49] Web/php-reverse-shell
-[50] Web/windows-php-reverse-shell
-[51] Web/wwwolf-php-webshell
-[52] Wordpress/malicious-wordpress-plugin
-[53] Wordpress/wordpress-exploit-framework
-```
-
-### Detailed
+- 53 Tools
 
 | Category      | Tool                         | Source                                                                      |
 |:--------------|:---------------------------- |:----------------------------------------------------------------------------|
@@ -220,6 +159,7 @@ $ ./sometools.sh list
 | PrivEsc-Lin   | pspy                         | <https://github.com/DominicBreuker/pspy>                                    |
 | PrivEsc-Lin   | setuid-wrapper               | <https://github.com/jfredrickson/setuid-wrapper>                            |
 | PrivEsc-Lin   | unix-privesc-check           | <https://github.com/pentestmonkey/unix-privesc-check>                       |
+| PrivEsc-Win   | Ghostpack-CompiledBinaries   | <https://github.com/r3motecontrol/Ghostpack-CompiledBinaries>               |
 | PrivEsc-Win   | JAWS                         | <https://github.com/411Hall/JAWS>                                           |
 | PrivEsc-Win   | Powerless                    | <https://github.com/M4ximuss/Powerless>                                     |
 | PrivEsc-Win   | Privesc                      | <https://github.com/enjoiz/Privesc>                                         |
@@ -241,6 +181,7 @@ $ ./sometools.sh list
 | Utilities     | decodify                     | <https://github.com/s0md3v/Decodify>                                        |
 | Utilities     | enum4linux-ng                | <https://github.com/cddmp/enum4linux-ng>                                    |
 | Utilities     | evil-winrm                   | <https://github.com/Hackplayers/evil-winrm>                                 |
+| Utilities     | haiti                        | <https://github.com/noraj/haiti>                                            |
 | Utilities     | impacket                     | <https://github.com/SecureAuthCorp/impacket>                                |
 | Utilities     | nishang                      | <https://github.com/samratashok/nishang>                                    |
 | Utilities     | nmapAutomator                | <https://github.com/21y4d/nmapAutomator>                                    |
@@ -248,12 +189,11 @@ $ ./sometools.sh list
 | Utilities     | revshellgen                  | <https://github.com/t0thkr1s/revshellgen>                                   |
 | Web           | LFISuite                     | <https://github.com/D35m0nd142/LFISuite.git>                                |
 | Web           | byp4xx                       | <https://github.com/lobuhi/byp4xx.git>                                      |
-| Web           | dirsearch                    | <https://github.com/maurosoria/dirsearch>                                   |
 | Web           | php-reverse-shell            | <https://github.com/ivan-sincek/php-reverse-shell>                          |
 | Web           | windows-php-reverse-shell    | <https://github.com/Dhayalanb/windows-php-reverse-shell.git>                |
 | Web           | wwwolf-php-webshell          | <https://github.com/WhiteWinterWolf/wwwolf-php-webshell>                    |
-| Wordpress     | malicious-wordpress-plugin   | <https://github.com/wetw0rk/malicious-wordpress-plugin.git>                 |
-| Wordpress     | wordpress-exploit-framework  | <https://github.com/rastating/wordpress-exploit-framework>                  |
+| Web           | malicious-wordpress-plugin   | <https://github.com/wetw0rk/malicious-wordpress-plugin.git>                 |
+| Web           | wordpress-exploit-framework  | <https://github.com/rastating/wordpress-exploit-framework>                  |
 
 Note:
 
@@ -328,13 +268,13 @@ Note:
   $ ./sometools.sh git-search LinEnum 15
   ```
 
-  ![Some-Tools Help](images/git-search.jpg)
+  ![Some-Tools Help](images/gitsearch.png)
 
 - **self-update**:
   - That function help keeping this tool (Some-Tools) up to date. If you are behind it will ask you if you want to `pull`.
 
   ```bash
-  $ ./sometools.sh self-upadte
+  $ ./sometools.sh self-update
   ```
 
 - **uninstall**:
@@ -360,38 +300,29 @@ Note:
   $ ./sometools.sh add-tool LinEnum PrivEsc-Lin
   ```
 
-- **install-tool and update-tool using scrapy**
+- **install-tool and update-tool with Github API**
   
-  Sometimes tools need to be downloaded via the releases/latest page like pspy from DominicBreuker. So to be able to always update and download the latest version, the process needed a little twist with python and scrapy. If you add a new tool using this pattern, you can use the function bellow in your install-tool.sh and update-tool.sh files.
+  Sometimes tools need to be downloaded via the releases/latest page like pspy from DominicBreuker. So to be able to always update and download the latest version, the process needed a little twist with the Github API. If you add a new tool using this pattern, you can use the function bellow in your install-tool.sh and update-tool.sh files.
 
   ```bash
-  # example with pspy
-  # this is not a full script, only a function. Sould be part of an install or/and update script.
-  # function that use some-scrapper.py
-  function specialTool() {
-    urlGit="https://github.com"
-    ## You should modify urlTool variable (Should be the only modification)
-    urlTool="DominicBreuker/pspy/releases/latest"
+  #!/bin/bash
 
-    # scrapy command
-    scrapy runspider $SOME_ROOT/some-scrapper.py -a start_url="$urlGit/$urlTool" -o output.csv >/dev/null 2>&1
-    # Preparing txt file before downloading
-    mv output.csv output.txt
-    sort output.txt | uniq -d | tee output2.txt >/dev/null 2>&1
-    rm output.txt
-    sed -i -e 's#^#'"$urlGit"'#' output2.txt
-
-    # Downloading each line with wget
-    while IFS= read -r line; do
-      wget $(echo "$line" | tr -d '\r') #> /dev/null 2>&1
-    done <output2.txt
-
-    # Cleaning up
-    rm output2.txt
-    rm output2.txt-e
+  # in this exemple we will download all executables of pspy.
+  function gitGetLatestRelease() {
+    gitCounter=0
+    repoToGet="DominicBreuker/pspy"
+    apiURL="https://api.github.com/repos"
+    while [[ $checkDownloadURL != null ]]; do
+      checkDownloadURL=$(http "$apiURL/$repoToGet/releases/latest" | jq -r ".assets[$gitCounter].browser_download_url")
+      if [[ $checkDownloadURL == null ]]; then
+        break
+      fi
+      # download the release
+      wget "$checkDownloadURL"
+      gitCounter=$((gitCounter + 1))
+    done
   }
-
-  specialTool
+  gitGetLatestRelease
   ```
 
 - **info**:
@@ -415,31 +346,6 @@ Note:
   ```bash
   $ ./sometools.sh complete-uninstall
   ```
-
-## Vagrantfile
-
-Install Some-Tools within a brand new Kali 2020.x VM using [Vagrant](https://www.vagrantup.com). This repo include a Vagrantfile of Kali-Linux 2020.x release, but you can see the original vagrant box here <https://app.vagrantup.com/nicmilot/boxes/kali-full-2020>. Providers for this box are: VMWare Fusion and Virtualbox.
-
-I'm using VMware Fusion, so this Vagrantfile will be configure that way. You can modify vagrant box information to fit your need. If you are using Virtualbox, just swith the comments in the Vagrantfile.
-
-How to use it ? (Complete install with brand new Kali VM in 5 commands):
-
-```bash
-# Download Vagrantfile from this repo
-$ wget https://raw.githubusercontent.com/som3canadian/Some-Tools/master/Vagrantfile
-# start the kali box
-$ vagrant up
-# connect ssh to the kali box
-$ vagrant ssh
-# cd into some-tools
-$ cd Desktop/Some-Tools
-# setup some-tools
-$ ./sometools.sh setup
-# Verify the installation by:
-# 1. open new terminal tab or window
-# 2. cd ~/Desktop/Some-Tools
-# 3. ./sometools.sh list
-```
 
 ## Others
 
