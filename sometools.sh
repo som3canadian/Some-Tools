@@ -39,6 +39,7 @@ Actions:
       check-update         Check Update for an installed tool and Update it if you want
       check-update-all     Check Update for all installed tools
       git-search           Search for a tool on github
+      search-poc           Search for a PoC in the PoC-in-GitHub tool
       self-update          Check Update for Some-Tools and Update if you want
       add-tool             Create template for a new tool (./$(basename "$0") add-tool newtoolname category)
       uninstall            Uninstall a tool (Trying uninstall with the tool built-in uninstall.sh before Cleaning from our project)
@@ -78,7 +79,7 @@ ACTION=$1
 TOOL="$2"
 NEWTOOLDIR=$3
 
-if [ -z "$TOOL" ] && [ "$ACTION" != "list" ] && [ "$ACTION" != "list-installed" ] && [ "$ACTION" != "list-bin" ] && [ "$ACTION" != "setup" ] && [ "$ACTION" != "self-update" ] && [ "$ACTION" != "help" ] && [ "$ACTION" != "check-update-all" ] && [ "$ACTION" != "install-all" ] && [ "$ACTION" != "complete-uninstall" ]; then
+if [ -z "$TOOL" ] && [ "$ACTION" != "list" ] && [ "$ACTION" != "list-installed" ] && [ "$ACTION" != "list-bin" ] && [ "$ACTION" != "setup" ] && [ "$ACTION" != "self-update" ] && [ "$ACTION" != "help" ] && [ "$ACTION" != "check-update-all" ] && [ "$ACTION" != "install-all" ] && [ "$ACTION" != "complete-uninstall" ] && [ "$ACTION" != "search-poc" ]; then
     usage
     exit 1
 fi
@@ -651,6 +652,37 @@ function gitSearch() {
     echo "Total results: $totalCount"
     rm data.json
 }
+
+function searchPOC() {
+  pocFolder="Utilities/PoC-in-GitHub/PoC-in-GitHub"
+  # check that PoC-in-GitHub is installed
+  if [[ -f "Utilities/PoC-in-GitHub/.installed" ]];then
+    echo "PoC-in-GitHub is installed" >/dev/null
+  else
+    echo ""
+    log "[*] To be able to use that function, you have to install PoC-in-GitHub"
+    echo "$ ./sometools.sh install PoC-in-GitHub"
+    exit 1
+  fi
+  # read cve number from user
+  read -p "Enter CVE number (ex:2020-0624)": cveNumber
+  # set var
+  getYear=$(echo "$cveNumber" | cut -d "-" -f1)
+  getNumber=$(echo "$cveNumber" | cut -d "-" -f2)
+  if [ -d "$pocFolder/$getYear" ]; then
+    newPOCfolder="$pocFolder/$getYear"
+    cveFileName="CVE-$getYear-$getNumber.json"
+    if [ -f "$newPOCfolder/$cveFileName" ]; then
+      log "[+] PoC found:"
+      echo ""
+      jq -r '.[]' "$newPOCfolder/$cveFileName"
+    else
+      log "[-] No PoC found for that CVE !"
+    fi
+  else
+    log "[-] Wrong year: $getYear !"
+  fi
+}
 ############### End Git Search ###################################
 
 case $ACTION in
@@ -711,6 +743,9 @@ self-update)
     ;;
 git-search)
     gitSearch "$@"
+    ;;
+search-poc)
+    searchPOC
     ;;
 *) ;;
 

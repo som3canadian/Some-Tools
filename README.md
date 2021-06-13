@@ -41,6 +41,7 @@ $ ./sometools.sh list
 - `check-update` - Check Update for an installed tools and Update it if you want.
 - `check-update-all` - Check Update for all installed tools
 - `git-search` - Search for a tool on github
+- `search-poc` - Search for a PoC in the PoC-in-GitHub tool
 - `self-update` - Check Update for Some-Tools and Update if you want
 - `add-tool` - Create template for a new tool (./sometools.sh add-tool newtoolname category)
 - `uninstall` - Uninstall a tool (Trying uninstall with the tool built-in uninstall.sh before Cleaning from our project)
@@ -87,6 +88,8 @@ $ ./sometools.sh check-update PEAS
 $ ./sometools.sh check-update 9
 # Search for a tool on github
 $ ./sometools.sh git-search LinEnum
+# Search for a PoC in the PoC-in-GitHub tool
+$ ./sometools.sh search-poc
 # Show README.md of an installed tool
 $ ./sometools.sh info unicorn
 # Using ID instead of tool name
@@ -136,7 +139,7 @@ autoload -U $fpath[1]/*(.:t)
 
 ### Summary
 
-- 53 Tools
+- 54 Tools
 
 | Category      | Tool                         | Source                                                                      |
 |:--------------|:---------------------------- |:----------------------------------------------------------------------------|
@@ -173,6 +176,7 @@ autoload -U $fpath[1]/*(.:t)
 | PrivEsc-Win   | windows-privesc-check        | <https://github.com/pentestmonkey/windows-privesc-check>                    |
 | Utilities     | GraphQLmap                   | <https://github.com/swisskyrepo/GraphQLmap>                                 |
 | Utilities     | MyJWT                        | <https://github.com/mBouamama/MyJWT>                                        |
+| Utilities     | PoC-in-GitHub                | <https://github.com/nomi-sec/PoC-in-GitHub>                                 |
 | Utilities     | SirepRAT                     | <https://github.com/SafeBreach-Labs/SirepRAT.git>                           |
 | Utilities     | Windows-Tools                | <https://github.com/som3canadian/Windows-Tools.git>                         |
 | Utilities     | chisel                       | <https://github.com/jpillora/chisel>                                        |
@@ -268,7 +272,17 @@ Note:
   $ ./sometools.sh git-search LinEnum 15
   ```
 
-  ![Some-Tools Help](images/gitsearch.png)
+  ![Some-Tools git-search](images/gitsearch.png)
+
+- **search-poc**
+  - Search for a PoC in the PoC-in-GitHub tool
+  - To be able to use that function, PoC-in-GitHub tool have to be installed.
+
+  ```bash
+  $ ./sometools.sh search-poc
+  ```
+
+  ![Some-Tools search-poc](images/search-poc.png)
 
 - **self-update**:
   - That function help keeping this tool (Some-Tools) up to date. If you are behind it will ask you if you want to `pull`.
