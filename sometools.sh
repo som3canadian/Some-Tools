@@ -5,14 +5,13 @@
 # idea / bugs -> somecanadian0@gmail.com
 #####
 # New Idea/bug here:
+# https://github.com/9emin1/charlotte
+# https://github.com/spicesouls/onelinepy
+# https://github.com/keyunlocker12/evilpdf-1
+# https://github.com/isaudits/scripts
 # https://github.com/felamos/weirdhta
 # https://github.com/hashcat/kwprocessor
 # https://raw.githubusercontent.com/hashcat/kwprocessor/master/keymaps/en-us.keymap
-# https://github.com/nccgroup/Winpayloads
-# https://github.com/sevagas/macro_pack
-# https://github.com/spicesouls/onelinepy
-# https://github.com/cyberstruggle/whitepass
-# https://github.com/ffuf/ffuf ?
 # New Recon(enum) Category
 #####
 
@@ -86,11 +85,25 @@ fi
 
 # https://medium.com/@Aenon/bash-location-of-current-script-76db7fd2e388
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "$DIR"
 
 CHECKGIT="$SOME_ROOT/check-git.sh"
 CHECKGITACTION="$SOME_ROOT/check-git-action.sh"
 HOME_PATH=$(cd && pwd)
+
+function checkIfSetup() {
+  if [[ -n $SOME_ROOT ]]; then
+    ### echo "VAR SOME_ROOT exist"
+    cd "$SOME_ROOT"
+  else
+    if [ "$ACTION" != "setup" ]; then
+      echo ""
+      log "Make sure to run the 'setup' action to begin with sometools!"
+      usage
+      exit 1
+    fi
+  fi
+}
+checkIfSetup
 
 ########## Function to associate ID with $TOOL ($2 argument). We will set $TOOLPATH too  ##########
 function toolID() {
@@ -134,8 +147,29 @@ function requirePackages() {
     fi
 }
 
+# make sometools.sh available system wide ?
+function systemWide() {
+    echo ""
+    echo "> Do you want to make sometools.sh available from anywhere on your system ?"
+    select yn in "Yes" "No"; do
+        case $yn in
+        Yes)
+            sudo ln -s "$DIR/sometools.sh" /usr/local/bin/sometools
+            echo ""
+            echo "You can found the new symlink here: /usr/local/bin/sometools"
+            log "After setup is completed, just run 'sometools' from anywhere on your system."
+            echo "The symlink will be delete automatically if you uninstall sometool with the complete-uninstall action."
+            break ;;
+        No)
+            echo "Skipping this step!"
+            break ;;
+        esac
+    done
+}
+
 # bashrc or zshrc ?
 function whichShell() {
+    echo ""
     echo "> Which Shell are you using ?"
     echo "[*] Choose 1 for .zshrc, 2 for .bashrc or anything else to exit !"
     select zb in "Zshrc" "Bashrc"; do
@@ -155,7 +189,6 @@ function whichShell() {
     done
 }
 
-########## Functions include in setup action  ##########
 function setUp() {
     echo "We will use $shellSelect as shell"
     log "Do you want to continue the setup process ?"
@@ -182,6 +215,7 @@ function setUp() {
     logGood "[*] Set up done. You can now open new terminal tabs/windows or run \`source ~/.$shellSelect\` to set the new path!"
     log "[+] You can see your new path by doing: \`echo \$PATH\`"
 }
+
 ########## End of Functions include in setup action  ##########
 
 ########## General Functions  ##########
@@ -205,7 +239,7 @@ function specialUpdate() {
             esac
         done
     else
-        log "[-] [$TOOL] No update-tool.sh file or nothing to update with it. In most case, this is a normal output."
+        log "[-] [$TOOL] No update-tool.sh file or nothing to update with it. In most case, this is a normal output." >/dev/null
     fi
 }
 
@@ -443,7 +477,9 @@ function listBIN() {
     echo ""
     COUNTER=1
     while read -r line; do
-        echo "[$COUNTER] $line"
+        linePartOne=$(echo "$line" | cut -d "/" -f1)
+        linePartTwo=$(echo "$line" | cut -d "/" -f2)
+        echo "[$COUNTER] - [$linePartOne] $linePartTwo"
         COUNTER=$((COUNTER + 1))
     done <binlist-clean.txt
     echo ""
@@ -463,7 +499,7 @@ function installCat() {
             log "[+] Installing $t"
             cd "$t"
             ./install-tool.sh
-            cd "$DIR"
+            cd "$SOME_ROOT"
         else
             logInfo "[-] [$t] No install-tool.sh for this tool !"
         fi
@@ -479,7 +515,7 @@ function uninstallCat() {
                 log "[+] [$t] Removing dependencies with builtin uninstall.sh file."
                 cd "$t"
                 ./uninstall.sh
-                cd "$DIR"
+                cd "$SOME_ROOT"
                 log "[+] [$t] Continuing... We will remove tool from our project."
             else
                 logInfo "[-] [$t] No builtin uninstall.sh file. Continuing... We will remove tool from our project."
@@ -487,7 +523,7 @@ function uninstallCat() {
             if [ -f "$t"/uninstall-tool.sh ]; then
                 cd "$t"
                 ./uninstall-tool.sh
-                cd "$DIR"
+                cd "$SOME_ROOT"
                 logGood "[+] [$t] Uninstall finished"
             else
                 logInfo "[-] [$t] Uninstall FAILED! Probably no uninstall-tool.sh file in $t dir. In most case, this is a normal output."
@@ -496,7 +532,7 @@ function uninstallCat() {
             cd "$t"
             rm -rf "$temptoolname"
             rm .installed
-            cd "$DIR"
+            cd "$SOME_ROOT"
             log "[+] [$t] Uninstall is completed."
         else
             log "[-] [$t] Tool not installed !"
@@ -520,10 +556,10 @@ function checkUpdateAll() {
                     logGood "[+] [$TOOL] Continuing... Checking for custom update-tool.sh !"
                     cd ..
                     specialUpdate
-                    cd "$DIR"
+                    cd "$SOME_ROOT"
                 else
                     logGood "[+] [$t] You are not behind. $temptoolname is up to date !"
-                    cd "$DIR"
+                    cd "$SOME_ROOT"
                 fi
             else
                 logInfo "[-] [$t] Not a git repo !"
@@ -531,7 +567,7 @@ function checkUpdateAll() {
                 cd "$t"/"$temptoolname"
                 cd ..
                 specialUpdate
-                cd "$DIR"
+                cd "$SOME_ROOT"
             fi
         else
             echo "[-] [$t] Tool not installed !" >/dev/null
@@ -546,7 +582,7 @@ function installAll() {
             log "[+] Installing $t"
             cd "$t"
             ./install-tool.sh
-            cd "$DIR"
+            cd "$SOME_ROOT"
         else
             logInfo "[-] [$t] No install-tool.sh for this tool !"
         fi
@@ -565,7 +601,7 @@ function uninstallAll() {
                 log "[+] [$t] Removing dependencies with builtin uninstall.sh file."
                 cd "$t"
                 ./uninstall.sh
-                cd "$DIR"
+                cd "$SOME_ROOT"
                 log "[+] [$t] Continuing... We will remove tool from our project."
             else
                 logInfo "[-] [$t] No builtin uninstall.sh file. Continuing... We will remove tool from our project."
@@ -573,7 +609,7 @@ function uninstallAll() {
             if [ -f "$t"/uninstall-tool.sh ]; then
                 cd "$t"
                 ./uninstall-tool.sh
-                cd "$DIR"
+                cd "$SOME_ROOT"
                 logGood "[+] [$t] Uninstall finished"
             else
                 logInfo "[-] [$t] Uninstall FAILED! Probably no uninstall-tool.sh file in $t dir. In most case, this is a normal output."
@@ -581,7 +617,7 @@ function uninstallAll() {
             cd "$t"
             rm -rf "$temptoolname"
             rm .installed
-            cd "$DIR"
+            cd "$SOME_ROOT"
             logGood "[+] [$t] Uninstall is completed."
         else
             logInfo "[-] [$t] Tool not installed !"
@@ -590,15 +626,16 @@ function uninstallAll() {
 }
 
 function completeUninstall() {
-    log "[+] [$t] Removing all installed tools."
+    log "[+] Removing all installed tools and sometools configuration."
     cd "$HOME_PATH"
-    sed '/Some-tools-start/,/Some-tools-end/d' .zshrc >.zshrc.new
-    mv .zshrc .zshrc.backup2
-    mv .zshrc.new .zshrc
-    cd "$DIR"
+    sed '/Some-tools-start/,/Some-tools-end/d' .$shellSelect >.$shellSelect.new
+    mv .$shellSelect .$shellSelect.backup2
+    mv .$shellSelect.new .$shellSelect
+    cd "$SOME_ROOT"
     uninstallAll
     rm -rf bin
     rm -rf __pycache__
+    sudo rm /usr/local/bin/sometools
 }
 ########## End of Complete Uninstall functions  ##########
 
@@ -654,9 +691,9 @@ function gitSearch() {
 }
 
 function searchPOC() {
-  pocFolder="Utilities/PoC-in-GitHub/PoC-in-GitHub"
+  pocFolder="$SOME_ROOT/Utilities/PoC-in-GitHub/PoC-in-GitHub"
   # check that PoC-in-GitHub is installed
-  if [[ -f "Utilities/PoC-in-GitHub/.installed" ]];then
+  if [[ -f "$SOME_ROOT/Utilities/PoC-in-GitHub/.installed" ]];then
     echo "PoC-in-GitHub is installed" >/dev/null
   else
     echo ""
@@ -688,6 +725,7 @@ function searchPOC() {
 case $ACTION in
 setup)
     requirePackages
+    systemWide
     whichShell
     setUp
     ;;
@@ -735,6 +773,7 @@ uninstall-cat)
     uninstallCat
     ;;
 complete-uninstall)
+    whichShell
     completeUninstall
     ;;
 self-update)
